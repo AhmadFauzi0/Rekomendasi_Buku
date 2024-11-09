@@ -43,3 +43,12 @@ Berikut tabel penjelasan variabel pada dataset buku;
 | 8 | main topic | Kategori Tema atau topik buku |
 | 9 | subtopics | Gabungan dari beberapa Kategori Tema atau topik buku |
 
+## Data Preprocessing
+Pertama pada tahap ini menggabungkan data evaluation dengan data items pada variabel itemID, hal ini untuk melihat nama pada masing-masing itemID yang terdapat pada data evaluation. parameter yang digunakan adalah:
+* **on:** Parameter on digunakan untuk menentukan nama kolom atau list kolom yang akan digunakan sebagai kunci penggabungan, dalam kasus ini kita menggunkan variabel "itemID"
+* **how:** Parameter how digunakan untuk menentukan metode penggabungan yang akan digunakan dalam kasus ini kta menggunakan "left"
+> Ada empat opsi untuk parameter how:
+> * **inner:** Menggabungkan hanya baris-baris yang memiliki nilai yang sama pada kolom kunci di kedua DataFrame. Ini adalah metode default jika parameter how tidak ditentukan.
+> * **left:** Menggabungkan semua baris dari DataFrame kiri (df1) dengan baris-baris dari DataFrame kanan (df2) yang memiliki nilai yang sama pada kolom kunci. Jika ada baris di DataFrame kiri yang tidak memiliki nilai yang sama di DataFrame kanan, maka nilai kolom di DataFrame kanan akan diisi dengan NaN.
+> * **right:** Menggabungkan semua baris dari DataFrame kanan (df2) dengan baris-baris dari DataFrame kiri (df1) yang memiliki nilai yang sama pada kolom kunci. Jika ada baris di DataFrame kanan yang tidak memiliki nilai yang sama di DataFrame kiri, maka nilai kolom di DataFrame kiri akan diisi dengan NaN.
+> **outer:** Menggabungkan semua baris dari kedua DataFrame. Jika ada baris di salah satu DataFrame yang tidak memiliki nilai yang sama di DataFrame lainnya, maka nilai kolom di DataFrame lainnya akan diisi dengan NaN.
