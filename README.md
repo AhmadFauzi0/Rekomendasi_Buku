@@ -44,7 +44,7 @@ Berikut tabel penjelasan variabel pada dataset buku;
 | 9 | subtopics | Gabungan dari beberapa Kategori Tema atau topik buku |
 
 ## Data Preprocessing
-Pertama pada tahap ini menggabungkan data evaluation dengan data items pada variabel itemID, hal ini untuk melihat nama pada masing-masing itemID yang terdapat pada data evaluation. parameter yang digunakan adalah:
+Pertama pada tahap ini menggabungkan data evaluation dengan data items pada variabel itemID, dengan nama evaluation_all. hal ini untuk melihat nama pada masing-masing itemID yang terdapat pada data evaluation. parameter yang digunakan adalah:
 * **on:** Parameter on digunakan untuk menentukan nama kolom atau list kolom yang akan digunakan sebagai kunci penggabungan, dalam kasus ini kita menggunkan variabel "itemID"
 * **how:** Parameter how digunakan untuk menentukan metode penggabungan yang akan digunakan dalam kasus ini kta menggunakan "left"
 > Ada empat opsi untuk parameter how:
@@ -52,3 +52,33 @@ Pertama pada tahap ini menggabungkan data evaluation dengan data items pada vari
 > * **left:** Menggabungkan semua baris dari DataFrame kiri (df1) dengan baris-baris dari DataFrame kanan (df2) yang memiliki nilai yang sama pada kolom kunci. Jika ada baris di DataFrame kiri yang tidak memiliki nilai yang sama di DataFrame kanan, maka nilai kolom di DataFrame kanan akan diisi dengan NaN.
 > * **right:** Menggabungkan semua baris dari DataFrame kanan (df2) dengan baris-baris dari DataFrame kiri (df1) yang memiliki nilai yang sama pada kolom kunci. Jika ada baris di DataFrame kanan yang tidak memiliki nilai yang sama di DataFrame kiri, maka nilai kolom di DataFrame kiri akan diisi dengan NaN.
 > **outer:** Menggabungkan semua baris dari kedua DataFrame. Jika ada baris di salah satu DataFrame yang tidak memiliki nilai yang sama di DataFrame lainnya, maka nilai kolom di DataFrame lainnya akan diisi dengan NaN.
+
+Langkah Selanjutnya kita akan menggabungkan data evaluation_all dengan data transaksi. tujuan penggabungan ini untuk melihat nama itemID yang dikunjungi pada setiap sesi dalam data transaksi. untuk parameter **on** menggunakan itemID dan **how** menggunkan inner. Berikut hasilnya:
+
+Lik Gambar
+
+Sampai langkah ini kita sudah dapat melihat nama buku apa saja yang dilihat pada setiap sesi dalam transaksi, namun ada hal yang sedikit menggangu dalam melihat sesinya yaitu variabel sessionID berada ditengah untuk memudahkan dalam melihat data maka kita akan memindahkan variabel sessionID kedepan atau pada kolom pertama berdampingan dengan itemID.
+
+Setelah kita melihat data yang akan dijadikan data rekomendasi buku terlebih dahulu kita melihat missing value pada data kita, karena pada langkah diatas kita melihat missing value pada data maka dalam tahap ini akan kita selesaikan dan bersihkan datanya.
+
+link gambar
+
+Terlihat data missing pada 3 variabel yaitu variabel author, publisher dan main topic. karena data bertipe object dan keterbatasan dalam pengetahuan data maka data yang memiliki missing value akan dihapus.
+
+Link Gambar
+
+Setelah dihapus data berjumlah 5579 data dengan 10 kolom, dan sudah terlihat juga data yang kita miliki sudah bersih atau tidak ada lagi missing value.
+
+Sebelum melangkah lebih jauh kita akan melihat berapa jumlah buku berdasarkan itemID.
+
+Link Gambar
+
+Dari gambar diatas dapat diketahu total jumlah buku sebanyak 448, kita juga dapat melihat isi dari judul buku tersebut. 
+
+Selanjutnya, kita hanya akan menggunakan data unik untuk dimasukkan ke dalam proses pemodelan. Oleh karena itu, kita perlu menghapus data yang duplikat dengan fungsi drop_duplicates(). Dalam hal ini, kita membuang data duplikat pada kolom ‘itemID’. Dari hasil terdapat kolom subtopics yang tidak terlalu mempengaruhi data karena sudah ada pada kategory main topik maka kita akan menghapus kolom subtopic.
+
+Setelah data tidak ada lagi yang duplikat dan lain sebagainya selanjutnya kita akan merubah nama pada variabel atau kolom dan mengkonversinya dalam berbagai bentuk yaitu:
+* Merubah nama pada variabel atau kolom dalam bentuk list.
+* Membuat dictionary untuk menentukan pasangan key-value pada data id, judul_buku, penulis_buku, penerbit_buku dan topik_buku yang telah kita siapkan sebelumnya.
+
+## Model Development dengan Content Based Filtering
