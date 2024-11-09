@@ -28,6 +28,7 @@ Dalam tahapan Data Understanding, kita akan berfokus pada pemahaman mendalam ter
 > * File “transactions.csv” berisi informasi tentang klik, keranjang, dan pesanan selama periode tiga bulan. Setiap baris menampilkan satu transaksi untuk satu item. Semua atribut dijelaskan dalam file “features.pdf”.
 > * File “evalutation.csv” berisi daftar ID produk. Daftar ini merupakan bagian dari produk dari “items.csv” dan referensi untuk pengajuan.
 > Untuk melakukan rekomendasi buku variabel items dan transaksi yang akan digunakan sebagai variabel rekomendasi, sementara variabel evaluasi merupakan daftar nama itemID yang nantinya akan digabungkan pada variabel items.
+
 Pada masing-masing dataset terdapat variabel yang sama dan berbeda seperti pada data **item** terdiri dari itemID, title,	author,	publisher,	main topic,	subtopics. Untuk data **transactions** terdiri dari sessionID,	itemID,	click,	basket,	order. Dan untuk data evaluation terdiri dari 	itemID.
 Berikut tabel penjelasan variabel pada dataset buku;
 | No | Variabel	| Deskripsi |
