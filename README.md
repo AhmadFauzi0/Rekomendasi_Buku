@@ -108,12 +108,13 @@ Dalam tahap inilah Anda mengembangkan sistem rekomendasi dengan teknik content b
     > F-IDF (Term Frequency-Inverse Document Frequency) adalah teknik dalam pemrosesan bahasa alami (NLP) yang digunakan untuk mengubah teks menjadi representasi numerik atau vektor. Ini adalah metode yang populer untuk mengekstraksi fitur dari teks dan mengukur pentingnya suatu kata dalam sebuah dokumen relatif terhadap kumpulan dokumen (corpus).
 
 Selanjutnya, lakukan fit dan transformasi ke dalam bentuk matriks.
+
 ![FIT](https://github.com/user-attachments/assets/0e87f010-04d9-4b77-ab47-222f50b95f92)
 
-Perhatikanlah, matriks yang kita miliki berukuran (448, 108). Nilai 448 merupakan ukuran data dan 108 merupakan matrik topik_buku.
-Untuk menghasilkan vektor tf-idf dalam bentuk matriks, kita menggunakan fungsi todense().
+Perhatikanlah, matriks yang kita miliki berukuran (448, 108). Nilai 448 merupakan ukuran data dan 108 merupakan matrik topik_buku. Untuk menghasilkan vektor tf-idf dalam bentuk matriks, kita menggunakan fungsi todense().
 
 > **Fit dan Transform**
+> 
 > Fungsi .fit() mempelajari kosakata dari seluruh korpus, mencatat kata-kata unik, dan menghitung IDF untuk setiap kata. Setelah itu, .transform() akan mengonversi dokumen-dokumen dalam korpus menjadi representasi vektor berbasis nilai TF-IDF sesuai dengan kosakata yang dipelajari.
 
 
