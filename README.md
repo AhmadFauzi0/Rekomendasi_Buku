@@ -93,7 +93,7 @@ Terdapat beberapa teknik dalam membuat sistem rekomendasi, rekomendasi yang dibe
 
 Dalam tahap inilah Anda mengembangkan sistem rekomendasi dengan teknik content based filtering. Ingatlah, teknik content based filtering akan merekomendasikan item yang mirip dengan item yang disukai pengguna di masa lalu. Pada tahap ini, Anda akan menemukan representasi fitur penting dari setiap kategori buku dengan tfidf vectorizer dan menghitung tingkat kesamaan dengan cosine similarity. Setelah itu, Anda akan membuat sejumlah rekomendasi buku berdasarkan kesamaan yang telah dihitung sebelumnya. Pada Content Based Filtering kita dapat membuat sistem rekomendasi berdasarkan satu variabel kunci dan dengan banyak variabel kunci.
 > Berikut adalah langkah-langkah singkat untuk laporan Content-Based Filtering:
-> 
+
     1. Pengumpulan Data
     Kumpulkan data deskriptif (fitur) dari setiap item, seperti judul, genre, atau sinopsis.
     2. Ekstraksi Fitur
