@@ -93,6 +93,7 @@ Terdapat beberapa teknik dalam membuat sistem rekomendasi, rekomendasi yang dibe
 
 Dalam tahap inilah Anda mengembangkan sistem rekomendasi dengan teknik content based filtering. Ingatlah, teknik content based filtering akan merekomendasikan item yang mirip dengan item yang disukai pengguna di masa lalu. Pada tahap ini, Anda akan menemukan representasi fitur penting dari setiap kategori buku dengan tfidf vectorizer dan menghitung tingkat kesamaan dengan cosine similarity. Setelah itu, Anda akan membuat sejumlah rekomendasi buku berdasarkan kesamaan yang telah dihitung sebelumnya. Pada Content Based Filtering kita dapat membuat sistem rekomendasi berdasarkan satu variabel kunci dan dengan banyak variabel kunci.
 > Berikut adalah langkah-langkah singkat untuk laporan Content-Based Filtering:
+> 
     > 1. Pengumpulan Data
     >    Kumpulkan data deskriptif (fitur) dari setiap item, seperti judul, genre, atau sinopsis.
     > 2. Ekstraksi Fitur
@@ -111,6 +112,5 @@ Dalam tahap inilah Anda mengembangkan sistem rekomendasi dengan teknik content b
   * Langkah kedua melakukan vektorisasi pada variabel topik_buku menggunakan TFIDF. berikut hasilnya:
     ![TFIDF](https://github.com/user-attachments/assets/aab403d6-ee09-408e-a9c1-eb8b1136c2cd)
 
-    > F-IDF (Term Frequency-Inverse Document Frequency) adalah teknik dalam pemrosesan bahasa alami (NLP) yang digunakan untuk mengubah teks menjadi representasi numerik atau vektor. Ini adalah metode yang populer untuk mengekstraksi fitur dari teks dan mengukur     
-      pentingnya suatu kata dalam sebuah dokumen relatif terhadap kumpulan dokumen (corpus).
+    > F-IDF (Term Frequency-Inverse Document Frequency) adalah teknik dalam pemrosesan bahasa alami (NLP) yang digunakan untuk mengubah teks menjadi representasi numerik atau vektor. Ini adalah metode yang populer untuk mengekstraksi fitur dari teks dan mengukur pentingnya suatu kata dalam sebuah dokumen relatif terhadap kumpulan dokumen (corpus). 
 
