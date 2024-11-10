@@ -92,7 +92,7 @@ Terdapat beberapa teknik dalam membuat sistem rekomendasi, rekomendasi yang dibe
 ### Model Development Content Based Filtering 
 
 Dalam tahap inilah Anda mengembangkan sistem rekomendasi dengan teknik content based filtering. Ingatlah, teknik content based filtering akan merekomendasikan item yang mirip dengan item yang disukai pengguna di masa lalu. Pada tahap ini, Anda akan menemukan representasi fitur penting dari setiap kategori buku dengan tfidf vectorizer dan menghitung tingkat kesamaan dengan cosine similarity. Setelah itu, Anda akan membuat sejumlah rekomendasi buku berdasarkan kesamaan yang telah dihitung sebelumnya. Pada Content Based Filtering kita dapat membuat sistem rekomendasi berdasarkan satu variabel kunci dan dengan banyak variabel kunci.
-> Berikut adalah langkah-langkah singkat untuk laporan Content-Based Filtering:
+> Berikut adalah langkah-langkah Content-Based Filtering:
 > 1. Pengumpulan Data: Kumpulkan data deskriptif (fitur) dari setiap item, seperti judul, genre, atau sinopsis.
 > 2. Ekstraksi Fitur: Ubah data deskriptif menjadi vektor fitur menggunakan teknik seperti TF-IDF atau word embeddings.
 > 3. Pembangunan Profil Pengguna: Buat profil pengguna berdasarkan rata-rata fitur dari item yang disukai atau diberi rating tinggi oleh pengguna.
@@ -105,5 +105,15 @@ Dalam tahap inilah Anda mengembangkan sistem rekomendasi dengan teknik content b
   * Langkah kedua melakukan vektorisasi pada variabel topik_buku menggunakan TFIDF. berikut hasilnya:
     ![TFIDF](https://github.com/user-attachments/assets/aab403d6-ee09-408e-a9c1-eb8b1136c2cd)
 
-    > F-IDF (Term Frequency-Inverse Document Frequency) adalah teknik dalam pemrosesan bahasa alami (NLP) yang digunakan untuk mengubah teks menjadi representasi numerik atau vektor. Ini adalah metode yang populer untuk mengekstraksi fitur dari teks dan mengukur pentingnya suatu kata dalam sebuah dokumen relatif terhadap kumpulan dokumen (corpus). 
+    > F-IDF (Term Frequency-Inverse Document Frequency) adalah teknik dalam pemrosesan bahasa alami (NLP) yang digunakan untuk mengubah teks menjadi representasi numerik atau vektor. Ini adalah metode yang populer untuk mengekstraksi fitur dari teks dan mengukur pentingnya suatu kata dalam sebuah dokumen relatif terhadap kumpulan dokumen (corpus).
+
+Selanjutnya, lakukan fit dan transformasi ke dalam bentuk matriks.
+![FIT](https://github.com/user-attachments/assets/0e87f010-04d9-4b77-ab47-222f50b95f92)
+
+Perhatikanlah, matriks yang kita miliki berukuran (448, 108). Nilai 448 merupakan ukuran data dan 108 merupakan matrik topik_buku.
+Untuk menghasilkan vektor tf-idf dalam bentuk matriks, kita menggunakan fungsi todense().
+
+> **Fit dan Transform**
+> Fungsi .fit() mempelajari kosakata dari seluruh korpus, mencatat kata-kata unik, dan menghitung IDF untuk setiap kata. Setelah itu, .transform() akan mengonversi dokumen-dokumen dalam korpus menjadi representasi vektor berbasis nilai TF-IDF sesuai dengan kosakata yang dipelajari.
+
 
