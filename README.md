@@ -117,4 +117,25 @@ Perhatikanlah, matriks yang kita miliki berukuran (448, 108). Nilai 448 merupaka
 > 
 > Fungsi .fit() mempelajari kosakata dari seluruh korpus, mencatat kata-kata unik, dan menghitung IDF untuk setiap kata. Setelah itu, .transform() akan mengonversi dokumen-dokumen dalam korpus menjadi representasi vektor berbasis nilai TF-IDF sesuai dengan kosakata yang dipelajari.
 
+Selanjutnya, mari kita lihat matriks tf-idf untuk beberapa buku (judul_buku) dan topik buku (topik_buku). hal ini untuk mengetahui hubungan antar variabel berikut hasilnya:
+
+![Hasil Tfidf](https://github.com/user-attachments/assets/70a09487-d1a8-4e14-8051-d9cb521d6446)
+
+Output matriks tf-idf di atas menunjukkan judul buku Companions memiliki kategori topik buku fd. Companions, matriks menunjukan bahwa judul buku tersebut merupakan buku dengan topik fd. Hal ini terlihat dari nilai matriks 1.0 pada topik buku fd.
+
+Sampai di sini, kita telah berhasil mengidentifikasi representasi fitur penting dari setiap topik buku dengan fungsi tfidfvectorizer. Kita juga telah menghasilkan matriks yang menunjukkan korelasi antara topik buku dengan judul buku. Selanjutnya, kita akan menghitung derajat kesamaan antara satu judul_buku dengan judul_buku lainnya untuk menghasilkan kandidat buku yang akan direkomendasikan.
+
+Pada tahap sebelumnya, kita telah berhasil mengidentifikasi korelasi antara judul buku dengan topik buku. Sekarang, kita akan menghitung derajat kesamaan (similarity degree) antar judul buku dengan teknik cosine similarity. Di sini, kita menggunakan fungsi cosine_similarity dari library sklearn.
+
+![Cosin](https://github.com/user-attachments/assets/d098ba25-29d2-4560-b7bf-8ba6f21351c4)
+
+Pada kode diatas, kita menghitung cosine similarity dataframe tfidf_matrix yang kita peroleh pada tahapan sebelumnya. Dengan satu baris kode untuk memanggil fungsi cosine similarity dari library sklearn, kita telah berhasil menghitung kesamaan (similarity) antar buku. Kode di atas menghasilkan keluaran berupa matriks kesamaan dalam bentuk array.
+
+> **Cosine Similarity**
+> Cosine Similarity adalah metrik yang digunakan untuk mengukur kesamaan antara dua vektor dalam ruang berdimensi tinggi. Dalam konteks pemrosesan bahasa alami dan rekomendasi, cosine similarity sering digunakan untuk menilai kemiripan antara dua dokumen teks atau antara item dalam sistem rekomendasi berdasarkan fitur-fitur tertentu.
+> Cosine similarity menghitung cosine dari sudut antara dua vektor dalam ruang vektor. Hasil perhitungan akan memberikan nilai antara -1 dan 1:
+> * 1 berarti vektor benar-benar identik.
+> * 0 berarti tidak ada kesamaan (sudut 90°).
+> * -1 menunjukkan kebalikan sempurna (dalam beberapa konteks, biasanya jarang terjadi).
+
 
