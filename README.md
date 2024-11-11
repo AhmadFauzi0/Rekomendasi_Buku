@@ -175,16 +175,36 @@ Sebelumnya, kita telah memiliki data similarity (kesamaan) antar judul buku. Kin
 
 > **Keterangan Gambar:**
 > 
-> Pengguna X pernah memesan buku The Complete Works Of H.P Lovecraft dan A Song of Ice and Fire 05. A Dance with Dragons. Kemudian, saat pengguna tersebut berencana untuk memesan buku dengan judul lain, sistem akan merekomendasikan sesuai topik yang dipesan sebalumnya yaitu The Complete Works Of H.P Lovecraft, dan Gefangen in den Universen. Nah, rekomendasi kedua buku ini berdasarkan kesamaan yang dihitung dengan cosine similarity pada tahap sebelumnya.
+> Pengguna X pernah memesan buku **The Complete Works Of H.P Lovecraft** Kemudian, saat pengguna tersebut berencana untuk memesan buku dengan judul lain, sistem akan merekomendasikan sesuai topik yang dipesan sebalumnya yaitu **A Song of Ice and Fire 05. A Dance with Dragon, dan Gefangen in den Universen.** Nah, rekomendasi kedua buku ini berdasarkan kesamaan yang dihitung dengan cosine similarity pada tahap sebelumnya.
 
 Di sini, kita membuat fungsi buku_recommendations dengan beberapa parameter sebagai berikut:
 
-Judul_buku : Nama Judul Buku (index kemiripan dataframe).
-Similarity_data : Dataframe mengenai similarity yang telah kita definisikan sebelumnya.
-Items : Nama dan fitur yang digunakan untuk mendefinisikan kemiripan, dalam hal ini adalah ‘judul_buku’ dan ‘topik_buku’.
-k : Banyak rekomendasi yang ingin diberikan.
-Sebelum mulai menulis kodenya, ingatlah kembali definisi sistem rekomendasi yang menyatakan bahwa keluaran sistem ini adalah berupa top-N recommendation. Oleh karena itu, kita akan memberikan sejumlah rekomendasi restoran pada pengguna yang diatur dalam parameter k.
+* Judul_buku : Nama Judul Buku (index kemiripan dataframe).
+* Similarity_data : Dataframe mengenai similarity yang telah kita definisikan sebelumnya.
+* Items : Nama dan fitur yang digunakan untuk mendefinisikan kemiripan, dalam hal ini adalah **‘judul_buku’ dan ‘topik_buku’.**
+* k : Banyak rekomendasi yang ingin diberikan.
 
+> Ingatlah kembali definisi sistem rekomendasi yang menyatakan bahwa keluaran sistem ini adalah berupa top-N recommendation. Oleh karena itu, kita akan memberikan sejumlah rekomendasi restoran pada pengguna yang diatur dalam parameter k, untuk sistem rekomendasi ini akan menggunakan **nilai k=5**.
 
+Setelah membuat parameter pada sistem rekomendasi, Selanjutnya, dapat kita terapkan untuk menemukan rekomendasi buku yang mirip dengan yang dipesan customer dalam percobaan ini kita akan melihat rekomendasi dari pemesanan buku **Von der Erde zum Mond**. Berikut Hasilnya:
+
+```
+df_buku[df_buku.judul_buku.eq('Von der Erde zum Mond')]
+
+```
+
+![rekomendasi buku 1](https://github.com/user-attachments/assets/5951e6d2-369b-457a-bfa6-fa65b0abf097)
+
+Dari gambar diatas kita bisa lihat buku dengan judul **Von der Erde zum Mond** yang sudah dipesan memiliki topik buku **FBC**. Sehingga hasil rokemdasi nantinya akan terkait dengan topik yang memiliki nilai **F B dan C**. Barikut hasil dari 5 rekomendasi berdasarkan topik buku:
+
+```
+# Mendapatkan rekomendasi buku yang mirip dengan Von der Erde zum Mond
+buku_recommendations('Von der Erde zum Mond')
+
+```
+
+![5 rekomendasi](https://github.com/user-attachments/assets/e908a5ee-b84f-4fa9-9a21-a66a63a74421)
+
+**SELAMAT** Kita sudah berhasil membuat rekomendasi buku berdasarkan dari topik buku.
 
 
