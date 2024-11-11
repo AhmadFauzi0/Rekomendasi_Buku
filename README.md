@@ -19,8 +19,7 @@ Pandemi COVID-19 telah memberikan dampak signifikan terhadap industri retail glo
 * Memberikan rekomendasi buku yang relevan dan personal untuk menarik minat pelanggan dan meningkatkan konversi penjualan.
 * Membantu toko buku kecil beradaptasi dengan perubahan menuju layanan daring, mengurangi ketergantungan pada interaksi fisik.
 ### Solution statements
-* Menggunakan Content-Based Filtering untuk Rekomendasi Buku Berdasarkan Preferensi Individu: Menggunakan data seperti genre, penulis, dan tema buku yang disukai pelanggan untuk merekomendasikan buku serupa, membantu menciptakan pengalaman personal tanpa interaksi fisik langsung.
-* Menggunakan Collaborative Filtering untuk Menyediakan Rekomendasi Berdasarkan Preferensi Pengguna Lain: Mengidentifikasi pola pembelian atau rating dari pelanggan dengan minat serupa untuk menawarkan rekomendasi buku yang relevan, meningkatkan peluang konversi penjualan.
+* Menggunakan Content-Based Filtering untuk Rekomendasi Buku Berdasarkan Preferensi Individu: Menggunakan data seperti judul buku, penulis, dan topik buku yang disukai pelanggan untuk merekomendasikan buku serupa, membantu menciptakan pengalaman personal tanpa interaksi fisik langsung.
 ## Data Understanding
 Dalam tahapan Data Understanding, kita akan berfokus pada pemahaman mendalam terhadap dataset yang digunakan untuk proyek Sistem Rekomendasi Buku. Data diambil dari [Kaggle](https://www.kaggle.com/) [Book Recommendation](https://www.kaggle.com/datasets/oscarm524/book-recommendation), dataset terdiri dari tiga file csv dan satu file pdf, tiga file csv yaitu items.csv, transactions.csv, dan evalutation.csv. Sementara data file pdf adalah features_2021.pdf yang berisi informasi dari variabel dataset. 
 > Berikut merupakan keterangan atau penjelasan dari masing-masing data:
