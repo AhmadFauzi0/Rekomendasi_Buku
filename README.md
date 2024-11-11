@@ -79,23 +79,26 @@ Pertama pada tahap ini menggabungkan data evaluation dengan data items pada vari
 
 Langkah Selanjutnya kita akan menggabungkan data evaluation_all dengan data transaksi. tujuan penggabungan ini untuk melihat nama itemID yang dikunjungi pada setiap sesi dalam data transaksi. untuk parameter **on** menggunakan itemID dan **how** menggunkan inner. Berikut hasilnya:
 
-Lik Gambar
+![evaluasi transaksi](https://github.com/user-attachments/assets/432ad515-ed69-4627-816a-996fabc8d6d6)
 
 Sampai langkah ini kita sudah dapat melihat nama buku apa saja yang dilihat pada setiap sesi dalam transaksi, namun ada hal yang sedikit menggangu dalam melihat sesinya yaitu variabel sessionID berada ditengah untuk memudahkan dalam melihat data maka kita akan memindahkan variabel sessionID kedepan atau pada kolom pertama berdampingan dengan itemID.
 
 Setelah kita melihat data yang akan dijadikan data rekomendasi buku terlebih dahulu kita melihat missing value pada data kita, karena pada langkah diatas kita melihat missing value pada data maka dalam tahap ini akan kita selesaikan dan bersihkan datanya.
 
-link gambar
+![Missing evaluasi transaksi](https://github.com/user-attachments/assets/79695e89-11f7-4d96-bc90-f5d4a6d91d93)
+
 
 Terlihat data missing pada 3 variabel yaitu variabel author, publisher dan main topic. karena data bertipe object dan keterbatasan dalam pengetahuan data maka data yang memiliki missing value akan dihapus.
 
-Link Gambar
+![Hasil missing evaluasi transaksi](https://github.com/user-attachments/assets/c5bca3eb-807b-4c1a-a999-2ad73cfd820a)
+
 
 Setelah dihapus data berjumlah 5579 data dengan 10 kolom, dan sudah terlihat juga data yang kita miliki sudah bersih atau tidak ada lagi missing value.
 
 Sebelum melangkah lebih jauh kita akan melihat berapa jumlah buku berdasarkan itemID.
 
-Link Gambar
+![Total Buku](https://github.com/user-attachments/assets/c127793c-812b-4323-aad9-db1af3210df0)
+
 
 Dari gambar diatas dapat diketahu total jumlah buku sebanyak 448, kita juga dapat melihat isi dari judul buku tersebut. 
 
@@ -161,5 +164,26 @@ Pada kode diatas, kita menghitung cosine similarity dataframe tfidf_matrix yang 
 > * 1 berarti vektor benar-benar identik.
 > * 0 berarti tidak ada kesamaan (sudut 90°).
 > * -1 menunjukkan kebalikan sempurna (dalam beberapa konteks, biasanya jarang terjadi).
+
+Pada tahapan ini, kita menghitung cosine similarity dataframe tfidf_matrix yang kita peroleh pada tahapan sebelumnya. Dengan satu baris kode untuk memanggil fungsi cosine similarity dari library sklearn, kita telah berhasil menghitung kesamaan (similarity) antar buku. hasilnya adalah keluaran berupa matriks kesamaan dalam bentuk array.
+
+## Mendapatkan Rekomendasi dengan Content Based Filtering 
+
+Sebelumnya, kita telah memiliki data similarity (kesamaan) antar judul buku. Kini, tibalah saatnya menghasilkan sejumlah judul buku yang akan direkomendasikan kepada pembaca. Untuk lebih memahami bagaimana cara kerjanya, lihatlah kembali matriks similarity pada tahap sebelumnya. Sebagai gambaran, mari kita ambil satu contoh berikut.
+
+![rekomendasi](https://github.com/user-attachments/assets/e154d552-bb10-47ae-9a2f-e19f6c588f02)
+
+> **Keterangan Gambar:**
+> Pengguna X pernah memesan buku The Complete Works Of H.P Lovecraft dan A Song of Ice and Fire 05. A Dance with Dragons. Kemudian, saat pengguna tersebut berencana untuk memesan buku dengan judul lain, sistem akan merekomendasikan sesuai topik yang dipesan sebalumnya yaitu The Complete Works Of H.P Lovecraft, dan Gefangen in den Universen. Nah, rekomendasi kedua buku ini berdasarkan kesamaan yang dihitung dengan cosine similarity pada tahap sebelumnya.
+
+Di sini, kita membuat fungsi buku_recommendations dengan beberapa parameter sebagai berikut:
+
+Judul_buku : Nama Judul Buku (index kemiripan dataframe).
+Similarity_data : Dataframe mengenai similarity yang telah kita definisikan sebelumnya.
+Items : Nama dan fitur yang digunakan untuk mendefinisikan kemiripan, dalam hal ini adalah ‘judul_buku’ dan ‘topik_buku’.
+k : Banyak rekomendasi yang ingin diberikan.
+Sebelum mulai menulis kodenya, ingatlah kembali definisi sistem rekomendasi yang menyatakan bahwa keluaran sistem ini adalah berupa top-N recommendation. Oleh karena itu, kita akan memberikan sejumlah rekomendasi restoran pada pengguna yang diatur dalam parameter k.
+
+
 
 
