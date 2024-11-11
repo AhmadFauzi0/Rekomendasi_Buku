@@ -210,8 +210,8 @@ buku_recommendations('Von der Erde zum Mond')
 >
 > Content-based filtering memiliki kelemahan dalam keterbatasan rekomendasi karena hanya menyarankan item yang mirip dengan preferensi pengguna sebelumnya, sehingga kurang bervariasi dan tidak mempertimbangkan popularitas item di kalangan pengguna lain. Teknik ini juga sangat bergantung pada kualitas fitur yang diekstraksi, yang bisa membatasi akurasi jika fiturnya tidak cukup baik. Selain itu, content-based filtering sulit untuk merekomendasikan item baru yang berbeda dari data yang ada dan membutuhkan pengolahan data kompleks, seperti vektorisasi teks, yang memakan waktu dan sumber daya. Akibatnya, teknik ini sering digabungkan dengan collaborative filtering untuk menghasilkan rekomendasi yang lebih baik.
 > 
-> Selanjutnya untuk pengembangan lebih lanjut kita dapat membuat sistem rekomendasi dengan berbagai teknik seperti yang ada dalam code yang saya berikan yaitu tekink Content-based filtering dengan banyak variabel kunci dan collaborative filtering. penggunaan hybrid yang mengkombinasikan kedua teknik tersebut juga dapat menjadi alternatif yang baik dlam membuat sistem rekomendasi.
+> Selanjutnya untuk pengembangan lebih lanjut kita dapat membuat sistem rekomendasi dengan berbagai teknik seperti yang ada dalam code yang saya berikan yaitu tekink Content-based filtering dengan banyak variabel kunci dan collaborative filtering. penggunaan hybrid yang mengkombinasikan kedua teknik tersebut juga dapat menjadi alternatif yang baik dalam membuat sistem rekomendasi.
 > 
-> TERIMA KASIH
+> **TERIMA KASIH**
 
 
