@@ -43,6 +43,30 @@ Berikut tabel penjelasan variabel pada dataset buku;
 | 8 | main topic | Kategori Tema atau topik buku |
 | 9 | subtopics | Gabungan dari beberapa Kategori Tema atau topik buku |
 
+* Berikut informasi mengenai jumlah data ,tipe data dan informasi data pada dataset tansaksi:
+
+![Info transaksi](https://github.com/user-attachments/assets/fe504596-4189-4d2b-a34f-2c6393c66efc)
+
+* Melihat missing value pada dataset transaksi:
+
+![Missing evaluasi transaksi](https://github.com/user-attachments/assets/ce918016-df19-4151-9b2b-24b362ea6433)
+
+* Berikut informasi mengenai jumlah data ,tipe data dan informasi data pada dataset item:
+
+![info item](https://github.com/user-attachments/assets/612ed634-c648-465d-b2bc-d5e9f3843cc1)
+
+* Melihat missing value pada dataset item:
+
+![missing item](https://github.com/user-attachments/assets/431030d5-ec10-444e-b4d6-cb688e4bc3e0)
+
+* Berikut informasi mengenai jumlah data ,tipe data dan informasi data pada dataset evaluasi:
+
+![info evaluasi](https://github.com/user-attachments/assets/a0a7a21a-de22-418d-8405-e8d4251cc5d3)
+
+* Melihat missing value pada dataset evaluasi:
+
+![Hasil missing evaluasi transaksi](https://github.com/user-attachments/assets/3a7a4152-df90-4e9f-a6ae-ffa53ebb143d)
+
 ## Data Preprocessing
 Pertama pada tahap ini menggabungkan data evaluation dengan data items pada variabel itemID, dengan nama evaluation_all. hal ini untuk melihat nama pada masing-masing itemID yang terdapat pada data evaluation. parameter yang digunakan adalah:
 * **on:** Parameter on digunakan untuk menentukan nama kolom atau list kolom yang akan digunakan sebagai kunci penggabungan, dalam kasus ini kita menggunkan variabel "itemID"
