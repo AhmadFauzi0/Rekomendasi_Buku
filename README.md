@@ -206,4 +206,10 @@ buku_recommendations('Von der Erde zum Mond')
 
 **SELAMAT** Kita sudah berhasil membuat rekomendasi buku berdasarkan dari topik buku.
 
+> NOTE:
+>
+> Content-based filtering memiliki kelemahan dalam keterbatasan rekomendasi karena hanya menyarankan item yang mirip dengan preferensi pengguna sebelumnya, sehingga kurang bervariasi dan tidak mempertimbangkan popularitas item di kalangan pengguna lain. Teknik ini juga sangat bergantung pada kualitas fitur yang diekstraksi, yang bisa membatasi akurasi jika fiturnya tidak cukup baik. Selain itu, content-based filtering sulit untuk merekomendasikan item baru yang berbeda dari data yang ada dan membutuhkan pengolahan data kompleks, seperti vektorisasi teks, yang memakan waktu dan sumber daya. Akibatnya, teknik ini sering digabungkan dengan collaborative filtering untuk menghasilkan rekomendasi yang lebih baik.
+> Selanjutnya untuk pengembangan lebih lanjut kita dapat membuat sistem rekomendasi dengan berbagai teknik seperti collaborative filtering atau dengan hybrid yaitu mengkombinasikan kedua teknik tersebut.
+> TERIMA KASIH
+
 
