@@ -174,6 +174,7 @@ Sebelumnya, kita telah memiliki data similarity (kesamaan) antar judul buku. Kin
 ![rekomendasi](https://github.com/user-attachments/assets/e154d552-bb10-47ae-9a2f-e19f6c588f02)
 
 > **Keterangan Gambar:**
+> 
 > Pengguna X pernah memesan buku The Complete Works Of H.P Lovecraft dan A Song of Ice and Fire 05. A Dance with Dragons. Kemudian, saat pengguna tersebut berencana untuk memesan buku dengan judul lain, sistem akan merekomendasikan sesuai topik yang dipesan sebalumnya yaitu The Complete Works Of H.P Lovecraft, dan Gefangen in den Universen. Nah, rekomendasi kedua buku ini berdasarkan kesamaan yang dihitung dengan cosine similarity pada tahap sebelumnya.
 
 Di sini, kita membuat fungsi buku_recommendations dengan beberapa parameter sebagai berikut:
