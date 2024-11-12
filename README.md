@@ -20,6 +20,7 @@ Pandemi COVID-19 telah memberikan dampak signifikan terhadap industri retail glo
 * Membantu toko buku kecil beradaptasi dengan perubahan menuju layanan daring, mengurangi ketergantungan pada interaksi fisik.
 ### Solution statements
 * Menggunakan Content-Based Filtering untuk Rekomendasi Buku Berdasarkan Preferensi Individu: Menggunakan data seperti judul buku, penulis, dan topik buku yang disukai pelanggan untuk merekomendasikan buku serupa, membantu menciptakan pengalaman personal tanpa interaksi fisik langsung.
+* Collaborative Filtering: Gunakan interaksi pelanggan (buku yang dibaca atau diberi rating) untuk memberi skor dan merekomendasikan buku berdasarkan kesamaan perilaku pengguna. Sistem ini akan menyarankan buku yang disukai oleh pelanggan dengan preferensi serupa.
 ## Data Understanding
 Dalam tahapan Data Understanding, kita akan berfokus pada pemahaman mendalam terhadap dataset yang digunakan untuk proyek Sistem Rekomendasi Buku. Data diambil dari [Kaggle](https://www.kaggle.com/) [Book Recommendation](https://www.kaggle.com/datasets/oscarm524/book-recommendation), dataset terdiri dari tiga file csv dan satu file pdf, tiga file csv yaitu items.csv, transactions.csv, dan evalutation.csv. Sementara data file pdf adalah features_2021.pdf yang berisi informasi dari variabel dataset. 
 > Berikut merupakan keterangan atau penjelasan dari masing-masing data:
@@ -34,13 +35,14 @@ Berikut tabel penjelasan variabel pada dataset buku;
 | -- | -------- | --------- |
 | 1 | sessionID | Sesi atau kunjungan customer pada setiap transaksi |
 | 2 | itemID | ID atau kode pada setiap Buku |
-| 3 | click | Interaksi dari setiap buku yang dikunjungi atau dilihat |
-| 4 | basket | Interaksi dari memasukan buku yang dipilih kedalam keranjang belanja |
-| 5 | order | Interaksi customer yang melakukan pembelian |
-| 6 | author | Pengarang atau penulis buku |
-| 7 | publisher | Penerbit Buku |
-| 8 | main topic | Kategori Tema atau topik buku |
-| 9 | subtopics | Gabungan dari beberapa Kategori Tema atau topik buku |
+| 3 | title | Judul buku untuk masing-masing itemID |
+| 4 | click | Interaksi dari setiap buku yang dikunjungi atau dilihat |
+| 5 | basket | Interaksi dari memasukan buku yang dipilih kedalam keranjang belanja |
+| 6 | order | Interaksi customer yang melakukan pembelian |
+| 7 | author | Pengarang atau penulis buku |
+| 8 | publisher | Penerbit Buku |
+| 9 | main topic | Kategori Tema atau topik buku |
+| 10 | subtopics | Gabungan dari beberapa Kategori Tema atau topik buku |
 
 * Berikut informasi mengenai jumlah data ,tipe data dan informasi data pada dataset tansaksi:
 
@@ -109,6 +111,34 @@ Setelah data tidak ada lagi yang duplikat dan lain sebagainya selanjutnya kita a
 
   > Saran:
     > Simpan Data pada drive yang sudah bersih dan siap digunakan untuk memudahkan dalam membuat sistem rekomendasi.
+
+Selanjutnya, untuk membuat sistem rekomendasi dengan collaborative filtering dataset yang akan digunakan adalah data transactions.csv dan data data buku yang sudah dibersihkan diatas.
+
+Dalam data transactions, Data tidak memiliki variabel rating sebagai variabel kunci dari rekomendasi, namun kita bisa menganggap variabel klik, basket, dan order sebagai bentuk interaksi antara pengguna dan item (buku), dan menghitung skor implicit feedback untuk mewakili "ketertarikan" pengguna terhadap buku.
+
+> Implicit feedback adalah data yang dikumpulkan secara tidak langsung dari tindakan pengguna, seperti riwayat pembelian, klik, atau tampilan halaman, yang menunjukkan preferensi mereka tanpa meminta peringkat atau ulasan eksplisit. Data ini digunakan dalam sistem rekomendasi untuk memahami preferensi pengguna dan memberikan rekomendasi yang relevan.
+>
+> Ada beberapa cara untuk membangun sistem rekomendasi berbasis implicit feedback: Pendekatan 1: Skoring Berdasarkan Interaksi Anda bisa membuat skor ketertarikan untuk setiap interaksi, misalnya:
+> * Klik: 1 poin
+> * Basket: 2 poin
+> * Order: 3 poin
+> * Skor ini akan menggambarkan tingkat ketertarikan pengguna pada suatu item. Misalnya, jika pengguna mengklik buku, skor ketertarikannya 1, jika memasukkan ke keranjang jadi 2, dan jika melakukan order, skornya 3.
+
+![data transaksi](https://github.com/user-attachments/assets/7f4663aa-ed13-40c8-a4e0-748bbac12635)
+
+Isi dari data transactions yaitu terdapat 4 vriabel sessionID, itemID, click, basket, order.
+
+Selanjutnya kita akan menggabungkan data yang memiliki itemID yang sama, hal ini cukup penting karena akan membuat data lebih bersih dan tidak ada lagi data yang sama.
+
+![transaksi data sama](https://github.com/user-attachments/assets/a42cc13e-f8f6-4c4e-b96f-da864ca33d70)
+
+Hasil penggabungan dari data menghasilkan jumlah data menjadi 24909 baris dan 5 columns. 
+
+Langkah selanjutnya adalah menghitung nilai bobot untuk semua jenis interaksi pada variabel click, basket, dan order. Berikut hasilnya:
+
+![score](https://github.com/user-attachments/assets/60085949-048f-4be6-9925-9b5f45a4fb90)
+
+Sampai disini kita sudah berhasil membuat data untuk teknik collaborative filtering menggunakan score yang dihasilkan dari penjumlahan interaksi pada variabel klik, basket, dan order.
 
 ## Model Development
 Terdapat beberapa teknik dalam membuat sistem rekomendasi, rekomendasi yang diberikan berdasarkan kesamaan pengguna atau berdasarkan kesamaan pada variabel yang dipilih oleh para pengguna. Dalam sistem rekomendasi ini kita akan membuat dengan dua teknik sistem rekomendasi yang umum digunakan yaitu:
@@ -205,6 +235,120 @@ buku_recommendations('Von der Erde zum Mond')
 ![5 rekomendasi](https://github.com/user-attachments/assets/e908a5ee-b84f-4fa9-9a21-a66a63a74421)
 
 **SELAMAT** Kita sudah berhasil membuat rekomendasi buku berdasarkan dari topik buku.
+
+Selanjutnya kita akan membuat sistem rekomendasi dengan teknik content based filtering dengan banyak variabel. langkah awal adalah dengan menentukan variabel yang akan dijadikan kunci dari pencarian pada sistem rekomendasi.
+
+Pada Tahap ini kita akan mencoba melakukan rekomendasi buku dengan lebih dari satu variabel kunci yaitu variabel penulis_buku, penerbit_buku, dan topik_buku.
+
+* Adapun langkah awal adalah dengan menggabungkan varibel tertsebut menjadi satu kolom untuk membuat vektorisasi. vektorisasi yang digunakan masih sama yaitu menggunakan tf-idf.
+* langkah kedua Setelah Variabel berhasil digabungkan dengan nama "combined_features" selanjutnya kita akan melakukan vektorisasi data pada variabel "combined_features".
+
+Selanjutnya, mari kita lihat matriks tf-idf untuk beberapa buku (judul_buku) dan (combined_features). 
+
+![matrik tfidf](https://github.com/user-attachments/assets/4ad90a65-8992-4451-8489-47c158448ecc)
+
+Output matriks tf-idf di atas menunjukkan judul buku Collector memiliki hubungan dengan fls hal ini ditunjukkan dengan nilai matrix sebesar 0.41732.
+
+Sampai di sini, kita telah berhasil mengidentifikasi representasi fitur penting dari setiap combined_features dengan fungsi tfidfvectorizer. Kita juga telah menghasilkan matriks yang menunjukkan korelasi antara topik buku dengan judul buku. Selanjutnya, kita akan menghitung derajat kesamaan antara satu judul_buku dengan judul_buku lainnya untuk menghasilkan kandidat buku yang akan direkomendasikan. penghitungan sama dengan langkah yang sudah kita lakukan pada content based filtering dengan satu variabel kunci.
+
+* Langkah selanjutnya, kita menghitung cosine similarity dataframe tfidf_matrix yang kita peroleh pada tahapan sebelumnya. Dengan satu baris kode untuk memanggil fungsi cosine similarity dari library sklearn, kita telah berhasil menghitung kesamaan (similarity) antar buku. Mari kita lihat matriks kesamaan setiap jdul buku dengan menampilkan nama judul buku dalam 5 sampel kolom (axis = 1) dan 10 sampel baris (axis=0). Jalankan kode berikut.
+
+![kesamaan ke 2](https://github.com/user-attachments/assets/e068c137-7f8d-49b0-ba6f-74228f512964)
+
+* Langkah Selanjutnya setelah kita melihat kesamaan antar judul buku, maka dapat kita buat Sistem Recomendasinya.
+
+Di sini, kita membuat fungsi buku_recommendations dengan beberapa parameter sebagai berikut:
+
+* Judul_buku : Nama Judul Buku (index kemiripan dataframe).
+* Similarity_data : Dataframe mengenai similarity yang telah kita definisikan sebelumnya.
+* Items : Nama dan fitur yang digunakan untuk mendefinisikan kemiripan, dalam hal ini adalah ‘judul_buku’ dan ‘topik_buku’.
+* k : Banyak rekomendasi yang ingin diberikan.
+  
+> nilai k yang akan diberikan untuk menampilkan rekomendasi adalah 10
+
+![Rekomendasi 10 k](https://github.com/user-attachments/assets/bc46663f-e0e4-4a82-806b-3057540f5143)
+
+Pada pencarian rekomendasi buku kita akan menggunakan judul buku yang sama yaitu "Von der Erde zum Mond". 
+
+Berikut hasil dari sistem rekomendasi dengan teknik content based filtering dengan banyak variabel kunci:
+
+![Rekomendasi 10](https://github.com/user-attachments/assets/8f1b7cb2-6534-4348-940d-f22304fdce8b)
+
+**Selamat** Kita sudah berhasil membuat sistem rekomendasi dengan banyak variabel kunci.
+
+> NOTE:
+> 
+> * Dengan menggunakan satu variabel kunci sistem hanya mengacu pada satu variabel dan ini cukup baik jika kita ingin merekomendasikan sesuai dengan minat customer yang menyukai buku berdasarkan topik, namun jika customer memiliki minat yang lebih kompleks atau tidak hanya topiknya saja maka pendekatan ini akan sedikit kurang efektif.
+> * content based filtering dengan banyak variabel kunci akan menberikan rekomendasi yang sangat beragam dan dapat menutupi kekurangan dari content based filteing dengan satu variabel kunci, namun sistem tidak dapat memberikan secara spesifik terhadap minat customer.
+
+## Mendapatkan Rekomendasi dengan Collaborative Filtering 
+
+Pada tahap Data Preparation kita sudah membuat dataset transaction yang memilki nilai score, data ini yang akan dijadikan data kunci untuk melakukan teknik Collaborative Filtering untuk mendapatkan rekomendasi dari cutomer yang belum pernah memesan pada toko buku.
+
+Langkah awal kita akan melihat statistik data:
+
+![Statistik](https://github.com/user-attachments/assets/f2b19308-d888-49a0-97d5-2957a6ae7f7c)
+
+Dari hasil diatas dapat dilihat pada kolom score memiliki jumlah score terkecil 1 dan yang terbesar 3655.
+
+Selanjutnya kita dapat melihat 10 score terbaik yang diperoleh dari interaksi data.
+
+![score tertinggi](https://github.com/user-attachments/assets/0efacf04-84fb-484e-997d-895980686a9c)
+
+* Langkah selanjutnya kita akan Mengubah sessionID menjadi list tanpa nilai yang sama, Melakukan encoding userID, dan Melakukan proses encoding angka ke ke userID.
+
+* Langkah berikutnya kita lakukan langkah yang sama pada variabel itemID yaitu menjadikan list, Melakukan encoding.
+
+* Langkah selanjutnya Mapping sessionID ke dataframe session dan Mapping itemID ke dataframe buku. berikut hasilnya:
+
+![mapping](https://github.com/user-attachments/assets/d76f2ea0-0f38-4393-a944-5e7f34b0e771)
+
+> Saran:
+> kita dapat menyimpan data yang sudah dimapping ke drive.
+
+Langkah selanjutnya kita akan mengacak data yang sudah di mapping tadi untuk menmberikan data yang lebih bervariasi
+
+```
+# Mengacak dataset
+df = df.sample(frac=1, random_state=42)
+df
+
+```
+
+![data acak](https://github.com/user-attachments/assets/573b4c6e-6401-4746-a9a6-f7955ad554b7)
+
+* Membagi Data untuk Training dan Validasi
+
+Pada tahap ini kita akan melakukan pembagian data menjadi data training dan validasi. Kita bagi data train dan validasi dengan komposisi 80:20. Namun sebelumnya, kita perlu memetakan (mapping) data session dan buku menjadi satu value terlebih dahulu. dan score sebagai value y.
+
+* Proses Training
+
+Pada tahap ini, model menghitung skor kecocokan antara session, buku dan score dengan teknik embedding. Pertama, kita melakukan proses embedding terhadap data session dan buku. Selanjutnya, lakukan operasi perkalian dot product antara embedding sesion dan buku. Selain itu, kita juga dapat menambahkan bias untuk setiap session dan buku. Skor kecocokan ditetapkan dengan fungsi aktivasi sigmoid.
+
+Di sini, kita membuat class RecommenderNet dengan keras Model class. Kode class RecommenderNet ini terinspirasi dari tutorial dalam situs Keras dengan beberapa adaptasi sesuai kasus yang sedang kita selesaikan.
+
+* Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation. 
+
+* Visualisasi Metrik
+
+Untuk melihat visualisasi proses training, mari kita plot metrik evaluasi dengan matplotlib. 
+
+![evaluasi](https://github.com/user-attachments/assets/8a7d65b0-5a95-4ef2-9bee-6f736ffe175f)
+
+Hasil Evaluasi pada data training cukup baik dengan root_mean_squared_error: 0.0076, walaupun pada data test perbedaan yang cukup jauh yaitu val_root_mean_squared_error: 0.4431. Akan tetapi ini masih dalam kategori baik untuk sebuah hasil dalam melakukan rekomendasi.
+
+## Mendapatkan Rekomendasi dengan collaborative filtering
+
+Selanjutnya kita akan membuat sebuah rekomendasi berdasarkan nilai score dari interaksi yang diberikan oleh customer atau pengguna yang telah mengunjungi toko buku, dari data tersebut sistem akan memberikan rekomendasi pada pengunjung baru.
+
+* Variabel buku_not_visited diperoleh dengan menggunakan operator bitwise (~) pada variabel resto_visited_by_user.
+* Selanjutnya, untuk memperoleh rekomendasi restoran, gunakan fungsi model.predict() dari library Keras.
+
+![collaborative](https://github.com/user-attachments/assets/1b08f542-067f-40c2-9845-41833a60c52a)
+
+**Selamat** Kita sudah dapat membuat sistem rekomendasi dengan teknik collaborative Filtering dengan melakukan top 10 buku yang memiliki nilai terbaik, dan buku dengan high score terbaik.
+
+> Dari hasil diatas terdapat kekurangan dalam menampilkan buku dengan score terbaik karena nilai score memiliki nilai yang sangat beragam atau bervariasi.
 
 > NOTE:
 >
