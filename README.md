@@ -267,7 +267,7 @@ Terdapat dua pendekatan pada content based filtering yaitu:
 
 **Content Based Filtering dengan satu variabel kunci**
 
-Pada tahap Data Preprocessing kita berhasil mengidentifikasi korelasi antara judul buku dengan topik buku. Sekarang, kita akan menghitung derajat kesamaan (similarity degree) antar judul buku dengan teknik cosine similarity. Di sini, kita menggunakan fungsi cosine_similarity dari library sklearn.
+Pada tahap Data Preprocessing kita berhasil mengidentifikasi korelasi antara **judul buku dengan topik buku**. Sekarang, kita akan menghitung derajat kesamaan (similarity degree) antar judul buku dengan teknik cosine similarity. Di sini, kita menggunakan fungsi cosine_similarity dari library sklearn.
 
 ![Cosin](https://github.com/user-attachments/assets/d098ba25-29d2-4560-b7bf-8ba6f21351c4)
 
@@ -280,16 +280,7 @@ Pada kode diatas, kita menghitung cosine similarity dataframe tfidf_matrix yang 
 > * 0 berarti tidak ada kesamaan (sudut 90°).
 > * -1 menunjukkan kebalikan sempurna (dalam beberapa konteks, biasanya jarang terjadi).
 
-Mmenghitung cosine similarity dataframe tfidf_matrix yang kita peroleh pada tahapan sebelumnya. Dengan satu baris kode untuk memanggil fungsi cosine similarity dari library sklearn, kita telah berhasil menghitung kesamaan (similarity) antar buku. hasilnya adalah keluaran berupa matriks kesamaan dalam bentuk array.
-
-```
-# Menghitung cosine similarity pada matrix tf-idf
-cosine_sim = cosine_similarity(tfidf_matrix)
-cosine_sim
-```
-
-
-**Mendapatkan Rekomendasi dengan Content Based Filtering**
+**Mendapatkan Rekomendasi Content Based Filtering dengan satu variabel kunci**
 
 Pada langkah Sebelumnya, kita telah memiliki data similarity (kesamaan) antar judul buku. Kini, tibalah saatnya menghasilkan sejumlah judul buku yang akan direkomendasikan kepada pembaca. Untuk lebih memahami bagaimana cara kerjanya, lihatlah kembali matriks similarity pada tahap sebelumnya. Sebagai gambaran, mari kita ambil satu contoh berikut.
 
@@ -306,7 +297,19 @@ Di sini, kita membuat fungsi buku_recommendations dengan beberapa parameter seba
 * Items : Nama dan fitur yang digunakan untuk mendefinisikan kemiripan, dalam hal ini adalah **‘judul_buku’ dan ‘topik_buku’.**
 * k : Banyak rekomendasi yang ingin diberikan.
 
-> Ingatlah kembali definisi sistem rekomendasi yang menyatakan bahwa keluaran sistem ini adalah berupa top-N recommendation. Oleh karena itu, kita akan memberikan sejumlah rekomendasi restoran pada pengguna yang diatur dalam parameter k, untuk sistem rekomendasi ini akan menggunakan **nilai k=5**.
+> Ingatlah kembali definisi sistem rekomendasi yang menyatakan bahwa keluaran sistem ini adalah berupa top-N recommendation.
+> 
+> Oleh karena itu, kita akan memberikan sejumlah rekomendasi restoran pada pengguna yang diatur dalam parameter k.
+> 
+> Dalam sistem rekomendasi ini akan menggunakan kita menggunakan **nilai k=5**.
+
+![image](https://github.com/user-attachments/assets/47c333c9-ecd3-41be-b1cd-7f33d0afb5f8)
+
+> Perhatikanlah, dengan menggunakan argpartition, kita mengambil sejumlah nilai k tertinggi dari similarity data (dalam kasus ini: dataframe cosine_sim_df).
+>
+> Kemudian, kita mengambil data dari bobot (tingkat kesamaan) tertinggi ke terendah. Data ini dimasukkan ke dalam variabel closest.
+>
+> Berikutnya, kita perlu menghapus judul_buku yang yang dicari agar tidak muncul dalam daftar rekomendasi. Dalam kasus ini, nanti kita akan mencari judul buku yang mirip dengan Von der Erde zum Mond, sehingga kita perlu drop judul_buku Von der Erde zum Mond agar tidak muncul dalam daftar rekomendasi yang diberikan nanti.
 
 Setelah membuat parameter pada sistem rekomendasi, Selanjutnya, dapat kita terapkan untuk menemukan rekomendasi buku yang mirip dengan yang dipesan customer dalam percobaan ini kita akan melihat rekomendasi dari pemesanan buku **Von der Erde zum Mond**. Berikut Hasilnya:
 
