@@ -112,6 +112,28 @@ Setelah data tidak ada lagi yang duplikat dan lain sebagainya selanjutnya kita a
   > Saran:
     > Simpan Data pada drive yang sudah bersih dan siap digunakan untuk memudahkan dalam membuat sistem rekomendasi.
 
+Selanjutnya melakukan vektorisasi pada variabel topik_buku menggunakan TFIDF. berikut hasilnya:
+
+![TFIDF](https://github.com/user-attachments/assets/aab403d6-ee09-408e-a9c1-eb8b1136c2cd)
+
+    > F-IDF (Term Frequency-Inverse Document Frequency) adalah teknik dalam pemrosesan bahasa alami (NLP) yang digunakan untuk mengubah teks menjadi representasi numerik atau vektor. Ini adalah metode yang populer untuk mengekstraksi fitur dari teks dan mengukur pentingnya suatu kata dalam sebuah dokumen relatif terhadap kumpulan dokumen (corpus).
+
+Lakukan fit dan transformasi ke dalam bentuk matriks.
+
+![FIT](https://github.com/user-attachments/assets/0e87f010-04d9-4b77-ab47-222f50b95f92)
+
+Perhatikanlah, matriks yang kita miliki berukuran (448, 108). Nilai 448 merupakan ukuran data dan 108 merupakan matrik topik_buku. Untuk menghasilkan vektor tf-idf dalam bentuk matriks, kita menggunakan fungsi todense().
+
+> **Fit dan Transform**
+> 
+> Fungsi .fit() mempelajari kosakata dari seluruh korpus, mencatat kata-kata unik, dan menghitung IDF untuk setiap kata. Setelah itu, .transform() akan mengonversi dokumen-dokumen dalam korpus menjadi representasi vektor berbasis nilai TF-IDF sesuai dengan kosakata yang dipelajari.
+
+Selanjutnya, mari kita lihat matriks tf-idf untuk beberapa buku (judul_buku) dan topik buku (topik_buku). hal ini untuk mengetahui hubungan antar variabel berikut hasilnya:
+
+![Hasil Tfidf](https://github.com/user-attachments/assets/70a09487-d1a8-4e14-8051-d9cb521d6446)
+
+Output matriks tf-idf di atas menunjukkan judul buku Companions memiliki kategori topik buku fd. Companions, matriks menunjukan bahwa judul buku tersebut merupakan buku dengan topik fd. Hal ini terlihat dari nilai matriks 1.0 pada topik buku fd.
+
 Selanjutnya, untuk membuat sistem rekomendasi dengan collaborative filtering dataset yang akan digunakan adalah data transactions.csv dan data data buku yang sudah dibersihkan diatas.
 
 Dalam data transactions, Data tidak memiliki variabel rating sebagai variabel kunci dari rekomendasi, namun kita bisa menganggap variabel klik, basket, dan order sebagai bentuk interaksi antara pengguna dan item (buku), dan menghitung skor implicit feedback untuk mewakili "ketertarikan" pengguna terhadap buku.
@@ -140,6 +162,90 @@ Langkah selanjutnya adalah menghitung nilai bobot untuk semua jenis interaksi pa
 
 Sampai disini kita sudah berhasil membuat data untuk teknik collaborative filtering menggunakan score yang dihasilkan dari penjumlahan interaksi pada variabel klik, basket, dan order.
 
+Langkah persiapan lainnya adalah kita akan Mengubah sessionID menjadi list tanpa nilai yang sama, Melakukan encoding userID, dan Melakukan proses encoding angka ke ke userID.
+
+```
+#Mengubah sessionID menjadi list tanpa nilai yang sama
+session_ids = df['sessionID'].unique().tolist()
+print('list sessionID: ', session_ids)
+#Melakukan encoding userID
+session_to_session_encoded = {x: i for i, x in enumerate(session_ids)}
+print('encoded sessionID : ', session_to_session_encoded)
+#Melakukan proses encoding angka ke ke userID
+session_encoded_to_session = {i: x for i, x in enumerate(session_ids)}
+print('encoded angka ke sessionID: ', session_encoded_to_session)
+
+```
+Langkah berikutnya kita lakukan langkah yang sama pada variabel itemID yaitu menjadikan list, Melakukan encoding.
+
+```
+#Mengubah itemID menjadi list tanpa nilai yang sama
+item_ids = df['itemID'].unique().tolist()
+print('list itemID: ', item_ids)
+#Melakukan encoding itemID
+buku_to_buku_encoded = {x: i for i, x in enumerate(item_ids)}
+print('encoded itemID : ', buku_to_buku_encoded)
+#Melakukan proses encoding angka ke ke itemID
+buku_encoded_to_buku = {i: x for i, x in enumerate(item_ids)}
+print('encoded angka ke itemID: ', buku_encoded_to_buku)
+
+```
+Langkah selanjutnya Mapping sessionID ke dataframe session dan Mapping itemID ke dataframe buku. berikut hasilnya:
+
+```
+#Mapping sessionID ke dataframe session
+df['session'] = df['sessionID'].map(session_to_session_encoded)
+#Mapping itemID ke dataframe buku
+df['buku'] = df['itemID'].map(buku_to_buku_encoded)
+#Melihat dataframe
+df.head()
+
+```
+![mapping](https://github.com/user-attachments/assets/d76f2ea0-0f38-4393-a944-5e7f34b0e771)
+
+Dalam collaborative filtering sebelum melakukan rekomendasi terlebih dahulu Mendapatkan jumlah session pada data, Mendapatkan jumlah buku, Mengubah interaction_score menjadi nilai float, Nilai minimum interaction_score, Nilai maksimal interaction_score. Berikut hasilnya:
+
+![image](https://github.com/user-attachments/assets/a57d5532-c51d-4386-b8ab-bfc6ab563901)
+
+> Saran:
+> kita dapat menyimpan data yang sudah dimapping ke drive.
+
+Langkah selanjutnya kita akan mengacak data yang sudah di mapping tadi untuk menmberikan data yang lebih bervariasi
+
+```
+# Mengacak dataset
+df = df.sample(frac=1, random_state=42)
+df
+
+```
+
+![data acak](https://github.com/user-attachments/assets/573b4c6e-6401-4746-a9a6-f7955ad554b7)
+
+**Membagi Data untuk Training dan Validasi**
+
+Pada tahap ini kita akan melakukan pembagian data menjadi data training dan validasi. Kita bagi data train dan validasi dengan komposisi 80:20. Namun sebelumnya, kita perlu memetakan (mapping) data session dan buku menjadi satu value terlebih dahulu. dan score sebagai value y.
+
+```
+#Membuat variabel x untuk mencocokkan data session dan buku menjadi satu value
+x = df[['session', 'buku']].values
+#Membuat variabel y untuk membuat interaction_score dari hasil
+y = df['score'].apply(lambda x: (x - min_rating) / (max_rating - min_rating)).values
+
+```
+```
+# Membagi menjadi 80% data train dan 20% data validasi
+train_indices = int(0.8 * df.shape[0])
+x_train, x_val, y_train, y_val = (
+    x[:train_indices],
+    x[train_indices:],
+    y[:train_indices],
+    y[train_indices:]
+)
+
+print(x, y)
+```
+Setelah data siap kita akan melakukan modeling data dengan masing-masing teknik dalam sistem rekomendasi.
+
 ## Model Development
 Terdapat beberapa teknik dalam membuat sistem rekomendasi, rekomendasi yang diberikan berdasarkan kesamaan pengguna atau berdasarkan kesamaan pada variabel yang dipilih oleh para pengguna. Dalam sistem rekomendasi ini kita akan membuat dengan dua teknik sistem rekomendasi yang umum digunakan yaitu:
 * content based filterin
@@ -148,6 +254,20 @@ Terdapat beberapa teknik dalam membuat sistem rekomendasi, rekomendasi yang dibe
 ### Model Development Content Based Filtering 
 
 Dalam tahap inilah Anda mengembangkan sistem rekomendasi dengan teknik content based filtering. Ingatlah, teknik content based filtering akan merekomendasikan item yang mirip dengan item yang disukai pengguna di masa lalu. Pada tahap ini, Anda akan menemukan representasi fitur penting dari setiap kategori buku dengan tfidf vectorizer dan menghitung tingkat kesamaan dengan cosine similarity. Setelah itu, Anda akan membuat sejumlah rekomendasi buku berdasarkan kesamaan yang telah dihitung sebelumnya. Pada Content Based Filtering kita dapat membuat sistem rekomendasi berdasarkan satu variabel kunci dan dengan banyak variabel kunci.
+
+Dalam content-based filtering dengan satu variabel kunci, sistem rekomendasi menggunakan satu karakteristik utama, seperti topik buku dalam rekomendasi buku atau film. Sistem ini membandingkan variabel kunci yang sama antar item untuk menemukan kesamaan, sehingga dapat memberikan rekomendasi yang sesuai dengan preferensi pengguna terhadap variabel tunggal ini.
+
+Namun, pendekatan ini sering kali terlalu sederhana karena tidak mempertimbangkan informasi tambahan yang relevan. Misalnya, jika hanya menggunakan genre, sistem mungkin melewatkan faktor lain seperti penulis atau gaya bahasa yang juga dapat memengaruhi preferensi pengguna.
+
+Di sisi lain, content-based filtering dengan banyak variabel kunci melibatkan penggunaan beberapa karakteristik atau fitur dari item untuk menghasilkan rekomendasi, seperti genre, penulis, tahun terbit, dan sinopsis pada buku. Dengan lebih banyak variabel, sistem dapat memberikan rekomendasi yang lebih kaya dan sesuai karena mempertimbangkan berbagai aspek yang mungkin relevan bagi pengguna.
+
+**Content Based Filtering dengan satu variabel kunci**
+
+> lebihan dan Kekurangan Dengan Satu Variabel Kunci
+> 
+> * lebihan: Mudah diimplementasikan, lebih cepat dan ringan secara komputasi.
+> * kurangan: Cenderung memberikan rekomendasi yang kurang akurat karena hanya mempertimbangkan satu faktor; kurang mampu memberikan rekomendasi yang bervariasi.
+>   
 > Berikut adalah langkah-langkah Content-Based Filtering:
 > 1. Pengumpulan Data: Kumpulkan data deskriptif (fitur) dari setiap item, seperti judul, genre, atau sinopsis.
 > 2. Ekstraksi Fitur: Ubah data deskriptif menjadi vektor fitur menggunakan teknik seperti TF-IDF atau word embeddings.
@@ -158,26 +278,8 @@ Dalam tahap inilah Anda mengembangkan sistem rekomendasi dengan teknik content b
 
 * Membuat sistem rekomendasi dengan teknik Content Based Filtering dengan satu variabel kunci, dimana variabel yang dijadikan rujukan adalah variabel **topik_buku**. berikut langkahnya:
   * Langkah pertama kita akan memanggil data buku yang sudag dibersihan diatas yaitu df_buku.
-  * Langkah kedua melakukan vektorisasi pada variabel topik_buku menggunakan TFIDF. berikut hasilnya:
-    ![TFIDF](https://github.com/user-attachments/assets/aab403d6-ee09-408e-a9c1-eb8b1136c2cd)
-
-    > F-IDF (Term Frequency-Inverse Document Frequency) adalah teknik dalam pemrosesan bahasa alami (NLP) yang digunakan untuk mengubah teks menjadi representasi numerik atau vektor. Ini adalah metode yang populer untuk mengekstraksi fitur dari teks dan mengukur pentingnya suatu kata dalam sebuah dokumen relatif terhadap kumpulan dokumen (corpus).
-
-Selanjutnya, lakukan fit dan transformasi ke dalam bentuk matriks.
-
-![FIT](https://github.com/user-attachments/assets/0e87f010-04d9-4b77-ab47-222f50b95f92)
-
-Perhatikanlah, matriks yang kita miliki berukuran (448, 108). Nilai 448 merupakan ukuran data dan 108 merupakan matrik topik_buku. Untuk menghasilkan vektor tf-idf dalam bentuk matriks, kita menggunakan fungsi todense().
-
-> **Fit dan Transform**
-> 
-> Fungsi .fit() mempelajari kosakata dari seluruh korpus, mencatat kata-kata unik, dan menghitung IDF untuk setiap kata. Setelah itu, .transform() akan mengonversi dokumen-dokumen dalam korpus menjadi representasi vektor berbasis nilai TF-IDF sesuai dengan kosakata yang dipelajari.
-
-Selanjutnya, mari kita lihat matriks tf-idf untuk beberapa buku (judul_buku) dan topik buku (topik_buku). hal ini untuk mengetahui hubungan antar variabel berikut hasilnya:
-
-![Hasil Tfidf](https://github.com/user-attachments/assets/70a09487-d1a8-4e14-8051-d9cb521d6446)
-
-Output matriks tf-idf di atas menunjukkan judul buku Companions memiliki kategori topik buku fd. Companions, matriks menunjukan bahwa judul buku tersebut merupakan buku dengan topik fd. Hal ini terlihat dari nilai matriks 1.0 pada topik buku fd.
+  * Langkah kedua melakukan vektorisasi pada variabel topik_buku menggunakan TFIDF.
+  * Selanjutnya, lakukan fit dan transformasi ke dalam bentuk matriks.
 
 Sampai di sini, kita telah berhasil mengidentifikasi representasi fitur penting dari setiap topik buku dengan fungsi tfidfvectorizer. Kita juga telah menghasilkan matriks yang menunjukkan korelasi antara topik buku dengan judul buku. Selanjutnya, kita akan menghitung derajat kesamaan antara satu judul_buku dengan judul_buku lainnya untuk menghasilkan kandidat buku yang akan direkomendasikan.
 
