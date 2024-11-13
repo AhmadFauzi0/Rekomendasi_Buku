@@ -384,7 +384,7 @@ Membuat fungsi buku_recommendations dengan beberapa parameter sebagai berikut:
 
 * Judul_buku : Nama Judul Buku (index kemiripan dataframe).
 * Similarity_data : Dataframe mengenai similarity yang telah kita definisikan sebelumnya.
-* Items : Nama dan fitur yang digunakan untuk mendefinisikan kemiripan, dalam hal ini adalah ‘judul_buku’ dan ‘topik_buku’.
+* Items : Nama dan fitur yang digunakan untuk mendefinisikan kemiripan, dalam hal ini adalah ‘judul_buku’ dan ‘combined_features’.
 * k : Banyak rekomendasi yang ingin diberikan.
   
 > **nilai k=10** yang akan diberikan untuk menampilkan rekomendasi.
