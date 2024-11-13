@@ -116,7 +116,7 @@ Selanjutnya melakukan vektorisasi pada variabel topik_buku menggunakan TFIDF. be
 
 ![TFIDF](https://github.com/user-attachments/assets/aab403d6-ee09-408e-a9c1-eb8b1136c2cd)
 
-    > F-IDF (Term Frequency-Inverse Document Frequency) adalah teknik dalam pemrosesan bahasa alami (NLP) yang digunakan untuk mengubah teks menjadi representasi numerik atau vektor. Ini adalah metode yang populer untuk mengekstraksi fitur dari teks dan mengukur pentingnya suatu kata dalam sebuah dokumen relatif terhadap kumpulan dokumen (corpus).
+> F-IDF (Term Frequency-Inverse Document Frequency) adalah teknik dalam pemrosesan bahasa alami (NLP) yang digunakan untuk mengubah teks menjadi representasi numerik atau vektor. Ini adalah metode yang populer untuk mengekstraksi fitur dari teks dan mengukur pentingnya suatu kata dalam sebuah dokumen relatif terhadap kumpulan dokumen (corpus).
 
 Lakukan fit dan transformasi ke dalam bentuk matriks.
 
@@ -298,9 +298,9 @@ Pada kode diatas, kita menghitung cosine similarity dataframe tfidf_matrix yang 
 
 Pada tahapan ini, kita menghitung cosine similarity dataframe tfidf_matrix yang kita peroleh pada tahapan sebelumnya. Dengan satu baris kode untuk memanggil fungsi cosine similarity dari library sklearn, kita telah berhasil menghitung kesamaan (similarity) antar buku. hasilnya adalah keluaran berupa matriks kesamaan dalam bentuk array.
 
-## Mendapatkan Rekomendasi dengan Content Based Filtering 
+**Mendapatkan Rekomendasi dengan Content Based Filtering**
 
-Sebelumnya, kita telah memiliki data similarity (kesamaan) antar judul buku. Kini, tibalah saatnya menghasilkan sejumlah judul buku yang akan direkomendasikan kepada pembaca. Untuk lebih memahami bagaimana cara kerjanya, lihatlah kembali matriks similarity pada tahap sebelumnya. Sebagai gambaran, mari kita ambil satu contoh berikut.
+Pada langkah Sebelumnya, kita telah memiliki data similarity (kesamaan) antar judul buku. Kini, tibalah saatnya menghasilkan sejumlah judul buku yang akan direkomendasikan kepada pembaca. Untuk lebih memahami bagaimana cara kerjanya, lihatlah kembali matriks similarity pada tahap sebelumnya. Sebagai gambaran, mari kita ambil satu contoh berikut.
 
 ![rekomendasi](https://github.com/user-attachments/assets/e154d552-bb10-47ae-9a2f-e19f6c588f02)
 
@@ -356,6 +356,9 @@ Precision = 0.4 (40%)
 **Content Based Filtering dengan Banyak Variabel Kunci**
 
 Selanjutnya kita akan membuat sistem rekomendasi dengan teknik content based filtering dengan banyak variabel. langkah awal adalah dengan menentukan variabel yang akan dijadikan kunci dari pencarian pada sistem rekomendasi.
+
+> * Kelebihan: Rekomendasi lebih akurat dan personal karena mempertimbangkan lebih banyak aspek item; meningkatkan kepuasan pengguna.
+> * Kekurangan: Lebih kompleks dan memerlukan sumber daya lebih besar untuk komputasi serta pemrosesan data; membutuhkan fitur yang relevan dan representatif untuk hasil yang baik.
 
 Pada Tahap ini kita akan mencoba melakukan rekomendasi buku dengan lebih dari satu variabel kunci yaitu variabel penulis_buku, penerbit_buku, dan topik_buku.
 
