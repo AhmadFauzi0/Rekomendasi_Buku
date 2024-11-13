@@ -264,6 +264,9 @@ Terdapat dua pendekatan pada content based filtering yaitu:
 >
 > Di sisi lain, content-based filtering dengan banyak variabel kunci melibatkan penggunaan beberapa karakteristik atau fitur dari item untuk menghasilkan rekomendasi, seperti genre, penulis, tahun terbit, dan sinopsis pada buku. Dengan lebih banyak variabel, sistem dapat memberikan rekomendasi yang lebih kaya dan sesuai karena mempertimbangkan berbagai aspek yang mungkin relevan bagi pengguna.
 
+* Evaluasi content based filtering dengan Matrix Precision: Evaluasi sistem rekomendasi menggunakan precision menilai seberapa tepat rekomendasi yang diberikan sistem terhadap kebutuhan pengguna. Dalam konteks sistem rekomendasi, precision mengukur persentase item yang direkomendasikan dan relevan di antara seluruh item yang direkomendasikan oleh sistem. Secara formal, precision dihitung sebagai rasio antara jumlah item relevan yang direkomendasikan (true positives) dengan total item yang direkomendasikan:
+
+![image](https://github.com/user-attachments/assets/2d941b40-7fb1-4e83-be25-5e4be67d2725)
 
 **Content Based Filtering dengan satu variabel kunci**
 
@@ -299,7 +302,7 @@ Di sini, kita membuat fungsi buku_recommendations dengan beberapa parameter seba
 
 > Ingatlah kembali definisi sistem rekomendasi yang menyatakan bahwa keluaran sistem ini adalah berupa top-N recommendation.
 > 
-> Oleh karena itu, kita akan memberikan sejumlah rekomendasi restoran pada pengguna yang diatur dalam parameter k.
+> Oleh karena itu, kita akan memberikan sejumlah rekomendasi buku pada pengguna yang diatur dalam parameter k.
 > 
 > Dalam sistem rekomendasi ini akan menggunakan kita menggunakan **nilai k=5**.
 
@@ -349,21 +352,17 @@ Precision = 0.4 (40%)
 
 **Content Based Filtering dengan Banyak Variabel Kunci**
 
-Selanjutnya kita akan membuat sistem rekomendasi dengan teknik content based filtering dengan banyak variabel. langkah awal adalah dengan menentukan variabel yang akan dijadikan kunci dari pencarian pada sistem rekomendasi.
+Selanjutnya kita akan membuat sistem rekomendasi dengan teknik content based filtering dengan banyak variabel. langkah awal adalah dengan menentukan variabel yang akan dijadikan kunci dari pencarian pada sistem rekomendasi. Pada Tahap ini kita akan mencoba melakukan rekomendasi buku dengan lebih dari satu variabel kunci yaitu variabel:
 
-> * Kelebihan: Rekomendasi lebih akurat dan personal karena mempertimbangkan lebih banyak aspek item; meningkatkan kepuasan pengguna.
-> * Kekurangan: Lebih kompleks dan memerlukan sumber daya lebih besar untuk komputasi serta pemrosesan data; membutuhkan fitur yang relevan dan representatif untuk hasil yang baik.
-
-Pada Tahap ini kita akan mencoba melakukan rekomendasi buku dengan lebih dari satu variabel kunci yaitu variabel:
 * penulis_buku.
 * penerbit_buku.
 * topik_buku.
 
 Adapun langkah awal adalah dengan menggabungkan 3 varibel tertsebut menjadi satu kolom  dengan nama **combined_features** sebagai variabel yang akan divektorisasi. vektorisasi yang digunakan masih sama yaitu menggunakan tf-idf.
 
-link tabel gabungan 
+![image](https://github.com/user-attachments/assets/8228d601-153d-424b-bf95-9446164a4a9c)
 
-langkah kedua Setelah Variabel berhasil digabungkan dengan nama **"combined_features"** selanjutnya kita akan melakukan vektorisasi data pada variabel **"combined_features"**.
+Setelah Variabel berhasil digabungkan dengan nama **"combined_features"** selanjutnya kita akan melakukan vektorisasi data pada variabel **"combined_features"**.
 
 Selanjutnya, mari kita lihat matriks tf-idf untuk beberapa buku pada variabel judul_buku dan (combined_features). 
 
@@ -375,20 +374,20 @@ Sampai di sini, kita telah berhasil mengidentifikasi representasi fitur penting 
 
 Selanjutnya, kita akan menghitung derajat kesamaan antara satu judul_buku dengan judul_buku lainnya untuk menghasilkan kandidat buku yang akan direkomendasikan. penghitungan sama dengan langkah yang sudah kita lakukan pada content based filtering dengan satu variabel kunci.
 
-Mari kita lihat matriks kesamaan setiap jdul buku dengan menampilkan nama judul buku dalam 5 sampel kolom (axis = 1) dan 10 sampel baris (axis=0). Jalankan kode berikut.
+Mari kita lihat matriks kesamaan setiap jdul buku dengan menampilkan **nama judul buku dalam 5 sampel kolom (axis = 1) dan 10 sampel baris (axis=0)**.
 
 ![kesamaan ke 2](https://github.com/user-attachments/assets/e068c137-7f8d-49b0-ba6f-74228f512964)
 
-Setelah kita melihat kesamaan antar judul buku, maka dapat kita buat Sistem Recomendasinya.
+Setelah kita melihat kesamaan antar judul buku, maka dapat kita buat parameter Sistem Recomendasinya.
 
-Di sini, kita membuat fungsi buku_recommendations dengan beberapa parameter sebagai berikut:
+Membuat fungsi buku_recommendations dengan beberapa parameter sebagai berikut:
 
 * Judul_buku : Nama Judul Buku (index kemiripan dataframe).
 * Similarity_data : Dataframe mengenai similarity yang telah kita definisikan sebelumnya.
 * Items : Nama dan fitur yang digunakan untuk mendefinisikan kemiripan, dalam hal ini adalah ‘judul_buku’ dan ‘topik_buku’.
 * k : Banyak rekomendasi yang ingin diberikan.
   
-> nilai k yang akan diberikan untuk menampilkan rekomendasi adalah 10
+> **nilai k=10** yang akan diberikan untuk menampilkan rekomendasi.
 
 ![Rekomendasi 10 k](https://github.com/user-attachments/assets/bc46663f-e0e4-4a82-806b-3057540f5143)
 
@@ -406,15 +405,17 @@ Dari Hasil dapat bahwa judul buku yang memilki kemiripan yang sama pada judul Vo
 
 Jumlah rekomendasi = 10 Jumlah
 
-Hasil rekomendasi sama = 1 
+* Hasil rekomendasi sama dengan Penulis buku = 1
+* Hasil rekomendasi sama dengan penerbit buku = 5
+* Hasil rekomendasi sama dengan topik buku = 2
 
 Precision = #of recomendation that are relevant / #of item we recommend
 
-Precision = 1/5
+Precision = 8/10
 
-Precision = 0.1 (10%)
+Precision = 0.8 (80%)
 
-> Hasil belum cukup baik namun yang harus dipahami pada proyek ini adalah kita memiliki rekomendasi-rekomendasi yang lebih bervariasi dari penulis, penerbit dan juga topik buku.
+> Hasil sudah cukup baik dan kita memiliki rekomendasi-rekomendasi yang lebih bervariasi dari penulis, penerbit dan juga topik buku.
 
 > **NOTE:**
 > 
@@ -470,38 +471,48 @@ Di sini, kita membuat class RecommenderNet dengan keras Model class. Kode class 
 
 ## **Evaluasi data dengan RMSE**
 
-> Root Mean Square Error (RMSE):
+> **Root Mean Square Error (RMSE):**
 > 
 > Digunakan pada collaborative filtering berbasis rating atau score untuk mengukur perbedaan antara rating/score yang diprediksi dengan rating/score aktual yang diberikan oleh pengguna.
+> 
 > RMSE memberi bobot lebih besar pada kesalahan yang lebih besar, menjadikannya sensitif terhadap prediksi yang salah secara signifikan.
+> 
+> ![image](https://github.com/user-attachments/assets/77274921-22d0-46ae-a6f4-bbf19d2c5553)
 
-* Visualisasi Metrik
+* **Visualisasi Metrik**
 
 Untuk melihat visualisasi proses training, mari kita plot metrik evaluasi dengan matplotlib. 
 
 ![evaluasi](https://github.com/user-attachments/assets/8a7d65b0-5a95-4ef2-9bee-6f736ffe175f)
 
-Hasil Evaluasi pada data training cukup baik dengan **root_mean_squared_error: 0.0076**, walaupun pada data test perbedaan yang cukup jauh yaitu **val_root_mean_squared_error: 0.4431.** Akan tetapi ini masih dalam kategori baik untuk sebuah hasil dalam melakukan rekomendasi.
+Hasil Evaluasi pada data training cukup baik yaitu:
+* **root_mean_squared_error: 0.0076**, walaupun pada data test perbedaan yang cukup jauh.
+* **val_root_mean_squared_error: 0.4431.** Akan tetapi ini masih dalam kategori baik untuk sebuah hasil dalam melakukan rekomendasi.
 
 ## Mendapatkan Rekomendasi dengan collaborative filtering
 
 Selanjutnya kita akan membuat sebuah rekomendasi berdasarkan nilai score dari interaksi yang diberikan oleh customer atau pengguna yang telah mengunjungi toko buku, dari data tersebut sistem akan memberikan rekomendasi pada pengunjung baru.
 
 * Variabel buku_not_visited diperoleh dengan menggunakan operator bitwise (~) pada variabel resto_visited_by_user.
-* Selanjutnya, untuk memperoleh rekomendasi restoran, gunakan fungsi model.predict() dari library Keras.
+* Selanjutnya, untuk memperoleh rekomendasi buku, gunakan fungsi model.predict() dari library Keras.
+* Dalam proyek ini kita menggunakan top 10 score tertinggi sebagai rekomendasi buku.
+* Menampilkan Buku dengan nilai tertinggi pada setiap session.
+
+Berikut parameter dan hasilnya:
+
+![image](https://github.com/user-attachments/assets/27c77022-e66e-4cd3-bba8-7cd7741448c5)
 
 ![collaborative](https://github.com/user-attachments/assets/1b08f542-067f-40c2-9845-41833a60c52a)
 
 **Selamat** Kita sudah dapat membuat sistem rekomendasi dengan teknik collaborative Filtering dengan melakukan top 10 buku yang memiliki nilai terbaik, dan buku dengan high score terbaik.
 
-
-> Evaluasi Hasil Rekomendasi:
 >
 > Dari 10 rekomendasi yang diberikan hanya satu yang memiliki kemiripan dan nilai score tertinggi pada interaksi customer dengan **session: 3083** yaitu "Der rote Planet".
 > Buku dengan score teringgi masih memiliki kemiripan terhadap hasil 10 rekomendasi dari salah satu topik buku.
 > Dari hasil diatas terdapat kekurangan dalam menampilkan buku dengan score terbaik karena nilai score memiliki nilai yang sangat beragam atau bervariasi.
 
-**Kesimpulan**
+## **Kesimpulan**
+
 Dari Kedua pendekatan atau teknik sistem rekomendasi content based filtering dan collaborative filtering, kedua pendekatan tersebut dapat menjadi solusi bagi toko buku untuk menyelesaikan permasalahannya dan menjalankan aktifitas penjualannya dengan lebih efektif dan efisien yaitu dengan:
 * Membuat sistem rekomendasi untuk memberikan rekomendasi dengan content based filtering berdasarkan satu atau beberapa variabel.
 * Melakukan penerapan collaborative filtering sebagai rekomendasi bagi customer yang baru saja mengunjungi toko buku secara online.
