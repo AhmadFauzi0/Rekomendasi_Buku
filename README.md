@@ -273,8 +273,6 @@ Pada tahap Data Preprocessing kita berhasil mengidentifikasi korelasi antara jud
 
 Pada kode diatas, kita menghitung cosine similarity dataframe tfidf_matrix yang kita peroleh pada tahapan sebelumnya. Dengan satu baris kode untuk memanggil fungsi cosine similarity dari library sklearn, kita telah berhasil menghitung kesamaan (similarity) antar buku. Kode di atas menghasilkan keluaran berupa matriks kesamaan dalam bentuk array.
 
-
-
 > **Cosine Similarity**
 > Cosine Similarity adalah metrik yang digunakan untuk mengukur kesamaan antara dua vektor dalam ruang berdimensi tinggi. Dalam konteks pemrosesan bahasa alami dan rekomendasi, cosine similarity sering digunakan untuk menilai kemiripan antara dua dokumen teks atau antara item dalam sistem rekomendasi berdasarkan fitur-fitur tertentu.
 > Cosine similarity menghitung cosine dari sudut antara dua vektor dalam ruang vektor. Hasil perhitungan akan memberikan nilai antara -1 dan 1:
@@ -282,7 +280,14 @@ Pada kode diatas, kita menghitung cosine similarity dataframe tfidf_matrix yang 
 > * 0 berarti tidak ada kesamaan (sudut 90°).
 > * -1 menunjukkan kebalikan sempurna (dalam beberapa konteks, biasanya jarang terjadi).
 
-Pada tahapan ini, kita menghitung cosine similarity dataframe tfidf_matrix yang kita peroleh pada tahapan sebelumnya. Dengan satu baris kode untuk memanggil fungsi cosine similarity dari library sklearn, kita telah berhasil menghitung kesamaan (similarity) antar buku. hasilnya adalah keluaran berupa matriks kesamaan dalam bentuk array.
+Mmenghitung cosine similarity dataframe tfidf_matrix yang kita peroleh pada tahapan sebelumnya. Dengan satu baris kode untuk memanggil fungsi cosine similarity dari library sklearn, kita telah berhasil menghitung kesamaan (similarity) antar buku. hasilnya adalah keluaran berupa matriks kesamaan dalam bentuk array.
+
+```
+# Menghitung cosine similarity pada matrix tf-idf
+cosine_sim = cosine_similarity(tfidf_matrix)
+cosine_sim
+```
+
 
 **Mendapatkan Rekomendasi dengan Content Based Filtering**
 
