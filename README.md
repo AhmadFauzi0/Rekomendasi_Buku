@@ -346,7 +346,9 @@ Dari Hasil dapat bahwa judul buku yang memilki topik yang sama pada judul Von de
 * Jumlah Hasil rekomendasi dengan topik yang sama = 2
 
 Precision = #of recomendation that are relevant / #of item we recommend
+
 Precision = 2/5
+
 Precision = 0.4 (40%)
 
 > Hasil belum cukup baik namun yang harus dipahami pada proyek ini adalah setiap topik memiliki lebih dari 1 topik dan kalau dilihat topik buku Von der Erde zum Mond merupakan gabungan dari topik F B dan C, sehingga sebenarnya hasil rekomendasi mewakili dari salah satu topik buku Von der Erde zum Mond.
