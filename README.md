@@ -513,17 +513,34 @@ Berikut parameter dan hasilnya:
 
 ## **Kesimpulan**
 
-Dari Kedua pendekatan atau teknik sistem rekomendasi content based filtering dan collaborative filtering, kedua pendekatan tersebut dapat menjadi solusi bagi toko buku untuk menyelesaikan permasalahannya dan menjalankan aktifitas penjualannya dengan lebih efektif dan efisien yaitu dengan:
-* Membuat sistem rekomendasi untuk memberikan rekomendasi dengan content based filtering berdasarkan satu atau beberapa variabel.
-* Melakukan penerapan collaborative filtering sebagai rekomendasi bagi customer yang baru saja mengunjungi toko buku secara online.
-* Sistem rekomendasi dapat memberikan efisiensi dalam pemanfaatan pemasaran secara online, sehingga mengurang cara-cara manual yang kurang efektif.
+Dalam proyek ini, sistem rekomendasi buku berbasis content-based filtering dan collaborative filtering berhasil memenuhi sebagian besar tujuan dan harapan dari problem statements. Model ini efektif dalam menggantikan pendekatan manual yang kurang efisien dan mampu mengatasi keterbatasan rekomendasi yang bergantung pada interaksi langsung. Namun, hasil menunjukkan bahwa masing-masing metode memiliki beberapa kelebihan dan kekurangan. berikut beberapa kesimpulan pada menjawab masalah pada proyek ini:
 
-> NOTE:
->
-> Content-based filtering memiliki kelemahan dalam keterbatasan rekomendasi karena hanya menyarankan item yang mirip dengan preferensi pengguna sebelumnya, sehingga kurang bervariasi dan tidak mempertimbangkan popularitas item di kalangan pengguna lain. Teknik ini juga sangat bergantung pada kualitas fitur yang diekstraksi, yang bisa membatasi akurasi jika fiturnya tidak cukup baik. Selain itu, content-based filtering sulit untuk merekomendasikan item baru yang berbeda dari data yang ada dan membutuhkan pengolahan data kompleks, seperti vektorisasi teks, yang memakan waktu dan sumber daya. Akibatnya, teknik ini sering digabungkan dengan collaborative filtering untuk menghasilkan rekomendasi yang lebih baik.
-> 
-> Selanjutnya untuk pengembangan lebih lanjut kita dapat membuat sistem rekomendasi dengan berbagai teknik seperti yang ada dalam code yang saya berikan yaitu tekink Content-based filtering dengan banyak variabel kunci dan collaborative filtering. penggunaan hybrid yang mengkombinasikan kedua teknik tersebut juga dapat menjadi alternatif yang baik dalam membuat sistem rekomendasi.
-> 
-> **TERIMA KASIH**
+* Rekomendasi yang Efisien dan Otomatis: Sistem berhasil menggantikan metode manual dengan pendekatan berbasis data yang otomatis dan efisien, sehingga dapat mengatasi peningkatan jumlah katalog dan pengguna.
+* Rekomendasi yang Relevan dan Menarik Minat Pelanggan: Model content-based filtering telah menunjukkan kemampuannya dalam mengidentifikasi buku dengan kesamaan topik, penulis, dan penerbit, meskipun hasil evaluasi dengan precision masih beragam (40%-80%). Hal ini berarti model cukup efektif dalam memberikan rekomendasi yang relevan dengan preferensi pelanggan, meskipun ada ruang untuk peningkatan.
+* Adaptasi untuk Toko Buku Daring: Solusi ini membantu toko buku kecil beradaptasi dengan perubahan menuju platform daring, sehingga tidak lagi bergantung pada interaksi fisik untuk memberikan rekomendasi.
+* Efisiensi dalam Mengganti Pendekatan Manual: Model ini berhasil menggantikan pendekatan manual dengan pendekatan berbasis data yang lebih praktis, sesuai dengan tujuan proyek.
+* Relevansi Rekomendasi untuk Meningkatkan Konversi Penjualan: Dari segi relevansi, hasil rekomendasi yang sesuai dengan preferensi pelanggan diharapkan dapat membantu meningkatkan konversi penjualan, meskipun perlu dioptimalkan agar lebih akurat.
+* Membantu Adaptasi ke Layanan Daring: Sistem rekomendasi ini sangat membantu toko buku untuk tetap berfungsi secara efektif dalam lingkungan daring, sesuai dengan tujuan adaptasi menuju layanan digital.
+* Content-Based Filtering: Dengan menggunakan content-based filtering, sistem mampu merekomendasikan buku berdasarkan karakteristik buku yang serupa, seperti penulis dan topik. Precision dari content-based filtering menunjukkan hasil yang baik (80%) ketika merekomendasikan buku dengan topik dan penerbit yang serupa. Hal ini mendukung solusi untuk menciptakan pengalaman yang personal bagi pelanggan.
+* Collaborative Filtering: Collaborative filtering cukup baik dalam merekomendasikan buku yang disukai oleh pelanggan dengan preferensi serupa. Meskipun hasil dari root mean squared error (RMSE) menunjukkan performa yang baik pada data training (0.0076), perbedaan pada data validasi (0.4431) menunjukkan bahwa model ini masih bisa ditingkatkan dalam memprediksi preferensi dengan lebih konsisten pada data baru.
+
+**Dampak Solusi Terhadap Project**
+
+Secara keseluruhan, solusi yang diimplementasikan memiliki dampak positif terhadap tujuan proyek:
+* Pendekatan otomatis dengan content-based dan collaborative filtering efektif dalam menyarankan buku berdasarkan preferensi individu maupun interaksi historis pelanggan lain.
+* Kedua metode ini bersama-sama memberikan rekomendasi yang lebih personal dan relevan, walaupun perlu dioptimalkan lebih lanjut untuk meningkatkan akurasi dan relevansi.
+
+Model berhasil mencapai tujuan utama proyek dan membantu toko buku dalam memberikan rekomendasi buku secara efisien, menarik minat pelanggan, dan mendukung penjualan daring.
+
+## Penutup
+
+Proyek sistem rekomendasi buku ini telah berhasil mengembangkan dan menerapkan model rekomendasi yang efisien dan relevan dengan menggunakan content-based filtering dan collaborative filtering. Kedua pendekatan tersebut dirancang untuk memenuhi kebutuhan pelanggan dalam lingkungan daring, di mana pendekatan manual tidak lagi efisien dan relevan. Dengan memanfaatkan data preferensi dan perilaku pelanggan, sistem ini dapat merekomendasikan buku secara personal, membantu toko buku meningkatkan keterlibatan pelanggan dan potensi penjualan tanpa memerlukan interaksi langsung.
+
+Hasil evaluasi menunjukkan bahwa sistem rekomendasi ini telah mencapai sebagian besar dari tujuan yang direncanakan dan memberikan dampak positif terhadap efisiensi serta relevansi rekomendasi. Meski demikian, ada peluang lebih lanjut untuk meningkatkan akurasi rekomendasi dengan penyempurnaan model dan teknik evaluasi yang lebih optimal.
+
+Sebagai langkah berikutnya, pengembangan sistem ini dapat difokuskan pada eksplorasi metode-metode pembelajaran mesin yang lebih canggih, seperti hybrid recommender systems, untuk lebih menyelaraskan hasil rekomendasi dengan preferensi unik setiap pengguna. Dengan demikian, proyek ini dapat terus beradaptasi terhadap kebutuhan pelanggan yang dinamis serta tren dalam dunia digital. Harapannya, sistem ini dapat menjadi salah satu pilar penting dalam mendukung daya saing toko buku di era digital yang serba cepat.
+
+
+
 
 
