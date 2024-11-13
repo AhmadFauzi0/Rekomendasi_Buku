@@ -263,21 +263,13 @@ Di sisi lain, content-based filtering dengan banyak variabel kunci melibatkan pe
 
 **Content Based Filtering dengan satu variabel kunci**
 
-> lebihan dan Kekurangan Dengan Satu Variabel Kunci
+> kelebihan dan Kekurangan Dengan Satu Variabel Kunci
 > 
 > * lebihan: Mudah diimplementasikan, lebih cepat dan ringan secara komputasi.
 > * kurangan: Cenderung memberikan rekomendasi yang kurang akurat karena hanya mempertimbangkan satu faktor; kurang mampu memberikan rekomendasi yang bervariasi.
->   
-> Berikut adalah langkah-langkah Content-Based Filtering:
-> 1. Pengumpulan Data: Kumpulkan data deskriptif (fitur) dari setiap item, seperti judul, genre, atau sinopsis.
-> 2. Ekstraksi Fitur: Ubah data deskriptif menjadi vektor fitur menggunakan teknik seperti TF-IDF atau word embeddings.
-> 3. Pembangunan Profil Pengguna: Buat profil pengguna berdasarkan rata-rata fitur dari item yang disukai atau diberi rating tinggi oleh pengguna.
-> 4. Pengukuran Kemiripan: Hitung kemiripan antara profil pengguna dan setiap item menggunakan Cosine Similarity atau Euclidean Distance.
-> 5. Pembuatan Rekomendasi: Pilih item dengan kemiripan tertinggi sebagai rekomendasi dan pastikan item tersebut belum pernah dilihat oleh pengguna.
-> 6. Evaluasi dan Penyempurnaan: Evaluasi hasil rekomendasi untuk memastikan akurasi, kemudian lakukan penyesuaian pada model jika diperlukan.
 
 * Membuat sistem rekomendasi dengan teknik Content Based Filtering dengan satu variabel kunci, dimana variabel yang dijadikan rujukan adalah variabel **topik_buku**. berikut langkahnya:
-  * Langkah pertama kita akan memanggil data buku yang sudag dibersihan diatas yaitu df_buku.
+  * Langkah pertama kita akan memanggil data buku yang sudah dibersihan diatas yaitu df_buku.
   * Langkah kedua melakukan vektorisasi pada variabel topik_buku menggunakan TFIDF.
   * Selanjutnya, lakukan fit dan transformasi ke dalam bentuk matriks.
 
@@ -338,7 +330,7 @@ buku_recommendations('Von der Erde zum Mond')
 
 **SELAMAT** Kita sudah berhasil membuat rekomendasi buku berdasarkan dari topik buku.
 
-**Evaluasi Hasil Rekomendasi**
+## **Evaluasi Hasil Rekomendasi**
 
 Dari Hasil dapat bahwa judul buku yang memilki topik yang sama pada judul Von der Erde zum Mond adalah Dune (Classics Hardcover) dan Durch die Wüste kedua masuk ke dalam topik FBC. Mari kita evaluasi hasil tersebut dengan Matrix Precision untuk sistem rekomendasi dengan teknik content based filtering:
 
@@ -360,24 +352,32 @@ Selanjutnya kita akan membuat sistem rekomendasi dengan teknik content based fil
 > * Kelebihan: Rekomendasi lebih akurat dan personal karena mempertimbangkan lebih banyak aspek item; meningkatkan kepuasan pengguna.
 > * Kekurangan: Lebih kompleks dan memerlukan sumber daya lebih besar untuk komputasi serta pemrosesan data; membutuhkan fitur yang relevan dan representatif untuk hasil yang baik.
 
-Pada Tahap ini kita akan mencoba melakukan rekomendasi buku dengan lebih dari satu variabel kunci yaitu variabel penulis_buku, penerbit_buku, dan topik_buku.
+Pada Tahap ini kita akan mencoba melakukan rekomendasi buku dengan lebih dari satu variabel kunci yaitu variabel:
+* penulis_buku.
+* penerbit_buku.
+* topik_buku.
 
-* Adapun langkah awal adalah dengan menggabungkan varibel tertsebut menjadi satu kolom untuk membuat vektorisasi. vektorisasi yang digunakan masih sama yaitu menggunakan tf-idf.
-* langkah kedua Setelah Variabel berhasil digabungkan dengan nama "combined_features" selanjutnya kita akan melakukan vektorisasi data pada variabel "combined_features".
+Adapun langkah awal adalah dengan menggabungkan 3 varibel tertsebut menjadi satu kolom  dengan nama **combined_features** sebagai variabel yang akan divektorisasi. vektorisasi yang digunakan masih sama yaitu menggunakan tf-idf.
 
-Selanjutnya, mari kita lihat matriks tf-idf untuk beberapa buku (judul_buku) dan (combined_features). 
+link tabel gabungan 
+
+langkah kedua Setelah Variabel berhasil digabungkan dengan nama **"combined_features"** selanjutnya kita akan melakukan vektorisasi data pada variabel **"combined_features"**.
+
+Selanjutnya, mari kita lihat matriks tf-idf untuk beberapa buku pada variabel judul_buku dan (combined_features). 
 
 ![matrik tfidf](https://github.com/user-attachments/assets/4ad90a65-8992-4451-8489-47c158448ecc)
 
-Output matriks tf-idf di atas menunjukkan judul buku Collector memiliki hubungan dengan fls hal ini ditunjukkan dengan nilai matrix sebesar 0.41732.
+> Output matriks tf-idf di atas menunjukkan judul buku Collector memiliki hubungan dengan fls hal ini ditunjukkan dengan nilai matrix sebesar 0.41732.
 
-Sampai di sini, kita telah berhasil mengidentifikasi representasi fitur penting dari setiap combined_features dengan fungsi tfidfvectorizer. Kita juga telah menghasilkan matriks yang menunjukkan korelasi antara topik buku dengan judul buku. Selanjutnya, kita akan menghitung derajat kesamaan antara satu judul_buku dengan judul_buku lainnya untuk menghasilkan kandidat buku yang akan direkomendasikan. penghitungan sama dengan langkah yang sudah kita lakukan pada content based filtering dengan satu variabel kunci.
+Sampai di sini, kita telah berhasil mengidentifikasi representasi fitur penting dari setiap **combined_features** dengan fungsi tfidfvectorizer. Kita juga telah menghasilkan matriks yang menunjukkan korelasi antara combined_features dengan judul buku. 
 
-* Langkah selanjutnya, kita menghitung cosine similarity dataframe tfidf_matrix yang kita peroleh pada tahapan sebelumnya. Dengan satu baris kode untuk memanggil fungsi cosine similarity dari library sklearn, kita telah berhasil menghitung kesamaan (similarity) antar buku. Mari kita lihat matriks kesamaan setiap jdul buku dengan menampilkan nama judul buku dalam 5 sampel kolom (axis = 1) dan 10 sampel baris (axis=0). Jalankan kode berikut.
+Selanjutnya, kita akan menghitung derajat kesamaan antara satu judul_buku dengan judul_buku lainnya untuk menghasilkan kandidat buku yang akan direkomendasikan. penghitungan sama dengan langkah yang sudah kita lakukan pada content based filtering dengan satu variabel kunci.
+
+Mari kita lihat matriks kesamaan setiap jdul buku dengan menampilkan nama judul buku dalam 5 sampel kolom (axis = 1) dan 10 sampel baris (axis=0). Jalankan kode berikut.
 
 ![kesamaan ke 2](https://github.com/user-attachments/assets/e068c137-7f8d-49b0-ba6f-74228f512964)
 
-* Langkah Selanjutnya setelah kita melihat kesamaan antar judul buku, maka dapat kita buat Sistem Recomendasinya.
+Setelah kita melihat kesamaan antar judul buku, maka dapat kita buat Sistem Recomendasinya.
 
 Di sini, kita membuat fungsi buku_recommendations dengan beberapa parameter sebagai berikut:
 
@@ -398,9 +398,9 @@ Berikut hasil dari sistem rekomendasi dengan teknik content based filtering deng
 
 **Selamat** Kita sudah berhasil membuat sistem rekomendasi dengan banyak variabel kunci.
 
-Evaluasi Hasil Rekomendasi
+## **Evaluasi Hasil Rekomendasi**
 
-Dari Hasil dapat bahwa judul buku yang memilki kemiripan yang sama pada judul Von der Erde zum Mond adalah Reise um den Mond, Durch die Wüste, Dune (Classics Hardcover), El Ratón Perdido, Das Wunder von Narnia / Der König von Narnia, Damaris (Band 2): Der Ring des Fürsten, Durch Magie erwacht (Die Magie-Reihe 1), Autumn & Leaf, Der silberne Schlüssel, Der Herr der Ringe, 10 rekomendasi masuk ke dalam Jules Verne Diogenes Verlag AG FBC. Mari kita evaluasi hasil tersebut dengan Matrix Precision untuk sistem rekomendasi dengan teknik content based filtering:
+Dari Hasil dapat bahwa judul buku yang memilki kemiripan yang sama pada judul Von der Erde zum Mond adalah Reise um den Mond, Durch die Wüste, Dune (Classics Hardcover), El Ratón Perdido, Das Wunder von Narnia / Der König von Narnia, Damaris (Band 2): Der Ring des Fürsten, Durch Magie erwacht (Die Magie-Reihe 1), Autumn & Leaf, Der silberne Schlüssel, Der Herr der Ringe, 10 rekomendasi masuk ke dalam Jules Verne Diogenes Verlag AG FBC. Mari kita evaluasi hasil tersebut dengan **Matrix Precision** untuk sistem rekomendasi dengan teknik content based filtering:
 
 Jumlah rekomendasi = 10 Jumlah
 
@@ -466,7 +466,7 @@ Di sini, kita membuat class RecommenderNet dengan keras Model class. Kode class 
 
 * Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation.
 
-**Evaluasi data dengan RMSE**
+## **Evaluasi data dengan RMSE**
 
 > Root Mean Square Error (RMSE):
 > 
