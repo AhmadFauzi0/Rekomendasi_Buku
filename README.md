@@ -398,7 +398,23 @@ Berikut hasil dari sistem rekomendasi dengan teknik content based filtering deng
 
 **Selamat** Kita sudah berhasil membuat sistem rekomendasi dengan banyak variabel kunci.
 
-> NOTE:
+Evaluasi Hasil Rekomendasi
+
+Dari Hasil dapat bahwa judul buku yang memilki kemiripan yang sama pada judul Von der Erde zum Mond adalah Reise um den Mond, Durch die Wüste, Dune (Classics Hardcover), El Ratón Perdido, Das Wunder von Narnia / Der König von Narnia, Damaris (Band 2): Der Ring des Fürsten, Durch Magie erwacht (Die Magie-Reihe 1), Autumn & Leaf, Der silberne Schlüssel, Der Herr der Ringe, 10 rekomendasi masuk ke dalam Jules Verne Diogenes Verlag AG FBC. Mari kita evaluasi hasil tersebut dengan Matrix Precision untuk sistem rekomendasi dengan teknik content based filtering:
+
+Jumlah rekomendasi = 10 Jumlah
+
+Hasil rekomendasi sama = 1 
+
+Precision = #of recomendation that are relevant / #of item we recommend
+
+Precision = 1/5
+
+Precision = 0.1 (10%)
+
+> Hasil belum cukup baik namun yang harus dipahami pada proyek ini adalah kita memiliki rekomendasi-rekomendasi yang lebih bervariasi dari penulis, penerbit dan juga topik buku.
+
+> **NOTE:**
 > 
 > * Dengan menggunakan satu variabel kunci sistem hanya mengacu pada satu variabel dan ini cukup baik jika kita ingin merekomendasikan sesuai dengan minat customer yang menyukai buku berdasarkan topik, namun jika customer memiliki minat yang lebih kompleks atau tidak hanya topiknya saja maka pendekatan ini akan sedikit kurang efektif.
 > * content based filtering dengan banyak variabel kunci akan menberikan rekomendasi yang sangat beragam dan dapat menutupi kekurangan dari content based filteing dengan satu variabel kunci, namun sistem tidak dapat memberikan secara spesifik terhadap minat customer.
@@ -406,6 +422,19 @@ Berikut hasil dari sistem rekomendasi dengan teknik content based filtering deng
 ## Mendapatkan Rekomendasi dengan Collaborative Filtering 
 
 Pada tahap Data Preparation kita sudah membuat dataset transaction yang memilki nilai score, data ini yang akan dijadikan data kunci untuk melakukan teknik Collaborative Filtering untuk mendapatkan rekomendasi dari cutomer yang belum pernah memesan pada toko buku.
+
+Sebelumnya kita telah menerapkan teknik content based filtering pada data. Teknik ini merekomendasikan item yang mirip dengan preferensi pengguna di masa lalu. Pada tahap ini, kita akan menerapkan teknik collaborative filtering untuk membuat sistem rekomendasi.
+
+Dalam kasus ini, Data tidak memiliki variabel rating sebagai variabel kunci dari rekomendasi, namun kita bisa menganggap variabel klik, basket, dan order sebagai bentuk interaksi antara pengguna dan item (buku), dan menghitung skor implicit feedback untuk mewakili "ketertarikan" pengguna terhadap buku.
+
+> Implicit feedback adalah data yang dikumpulkan secara tidak langsung dari tindakan pengguna, seperti riwayat pembelian, klik, atau tampilan halaman, yang menunjukkan preferensi mereka tanpa meminta peringkat atau ulasan eksplisit. Data ini digunakan dalam sistem rekomendasi untuk memahami preferensi pengguna dan memberikan rekomendasi yang relevan.
+>
+> Ada beberapa cara untuk membangun sistem rekomendasi berbasis implicit feedback: Pendekatan 1: Skoring Berdasarkan Interaksi Anda bisa membuat skor ketertarikan untuk setiap interaksi, misalnya:
+> * Klik: 1 poin
+> * Basket: 2 poin
+> * Order: 3 poin
+> 
+> Skor ini akan menggambarkan tingkat ketertarikan pengguna pada suatu item. Misalnya, jika pengguna mengklik buku, skor ketertarikannya 1, jika memasukkan ke keranjang jadi 2, dan jika melakukan order, skornya 3.
 
 Langkah awal kita akan melihat statistik data:
 
@@ -421,27 +450,13 @@ Selanjutnya kita dapat melihat 10 score terbaik yang diperoleh dari interaksi da
 
 * Langkah berikutnya kita lakukan langkah yang sama pada variabel itemID yaitu menjadikan list, Melakukan encoding.
 
-* Langkah selanjutnya Mapping sessionID ke dataframe session dan Mapping itemID ke dataframe buku. berikut hasilnya:
-
-![mapping](https://github.com/user-attachments/assets/d76f2ea0-0f38-4393-a944-5e7f34b0e771)
-
-> Saran:
-> kita dapat menyimpan data yang sudah dimapping ke drive.
-
-Langkah selanjutnya kita akan mengacak data yang sudah di mapping tadi untuk menmberikan data yang lebih bervariasi
-
-```
-# Mengacak dataset
-df = df.sample(frac=1, random_state=42)
-df
-
-```
-
-![data acak](https://github.com/user-attachments/assets/573b4c6e-6401-4746-a9a6-f7955ad554b7)
+* Langkah selanjutnya Mapping sessionID ke dataframe session dan Mapping itemID ke dataframe buku.
 
 * Membagi Data untuk Training dan Validasi
 
 Pada tahap ini kita akan melakukan pembagian data menjadi data training dan validasi. Kita bagi data train dan validasi dengan komposisi 80:20. Namun sebelumnya, kita perlu memetakan (mapping) data session dan buku menjadi satu value terlebih dahulu. dan score sebagai value y.
+
+Sebelum melakukan rekomendasi terlebih dahulu membuat training data untuk melihat seberapa baik data yang sudah kita buat.
 
 * Proses Training
 
@@ -449,7 +464,14 @@ Pada tahap ini, model menghitung skor kecocokan antara session, buku dan score d
 
 Di sini, kita membuat class RecommenderNet dengan keras Model class. Kode class RecommenderNet ini terinspirasi dari tutorial dalam situs Keras dengan beberapa adaptasi sesuai kasus yang sedang kita selesaikan.
 
-* Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation. 
+* Model ini menggunakan Binary Crossentropy untuk menghitung loss function, Adam (Adaptive Moment Estimation) sebagai optimizer, dan root mean squared error (RMSE) sebagai metrics evaluation.
+
+**Evaluasi data dengan RMSE**
+
+> Root Mean Square Error (RMSE):
+> 
+> Digunakan pada collaborative filtering berbasis rating atau score untuk mengukur perbedaan antara rating/score yang diprediksi dengan rating/score aktual yang diberikan oleh pengguna.
+> RMSE memberi bobot lebih besar pada kesalahan yang lebih besar, menjadikannya sensitif terhadap prediksi yang salah secara signifikan.
 
 * Visualisasi Metrik
 
@@ -457,7 +479,7 @@ Untuk melihat visualisasi proses training, mari kita plot metrik evaluasi dengan
 
 ![evaluasi](https://github.com/user-attachments/assets/8a7d65b0-5a95-4ef2-9bee-6f736ffe175f)
 
-Hasil Evaluasi pada data training cukup baik dengan root_mean_squared_error: 0.0076, walaupun pada data test perbedaan yang cukup jauh yaitu val_root_mean_squared_error: 0.4431. Akan tetapi ini masih dalam kategori baik untuk sebuah hasil dalam melakukan rekomendasi.
+Hasil Evaluasi pada data training cukup baik dengan **root_mean_squared_error: 0.0076**, walaupun pada data test perbedaan yang cukup jauh yaitu **val_root_mean_squared_error: 0.4431.** Akan tetapi ini masih dalam kategori baik untuk sebuah hasil dalam melakukan rekomendasi.
 
 ## Mendapatkan Rekomendasi dengan collaborative filtering
 
@@ -470,7 +492,18 @@ Selanjutnya kita akan membuat sebuah rekomendasi berdasarkan nilai score dari in
 
 **Selamat** Kita sudah dapat membuat sistem rekomendasi dengan teknik collaborative Filtering dengan melakukan top 10 buku yang memiliki nilai terbaik, dan buku dengan high score terbaik.
 
+
+> Evaluasi Hasil Rekomendasi:
+>
+> Dari 10 rekomendasi yang diberikan hanya satu yang memiliki kemiripan dan nilai score tertinggi pada interaksi customer dengan **session: 3083** yaitu "Der rote Planet".
+> Buku dengan score teringgi masih memiliki kemiripan terhadap hasil 10 rekomendasi dari salah satu topik buku.
 > Dari hasil diatas terdapat kekurangan dalam menampilkan buku dengan score terbaik karena nilai score memiliki nilai yang sangat beragam atau bervariasi.
+
+**Kesimpulan**
+Dari Kedua pendekatan atau teknik sistem rekomendasi content based filtering dan collaborative filtering, kedua pendekatan tersebut dapat menjadi solusi bagi toko buku untuk menyelesaikan permasalahannya dan menjalankan aktifitas penjualannya dengan lebih efektif dan efisien yaitu dengan:
+* Membuat sistem rekomendasi untuk memberikan rekomendasi dengan content based filtering berdasarkan satu atau beberapa variabel.
+* Melakukan penerapan collaborative filtering sebagai rekomendasi bagi customer yang baru saja mengunjungi toko buku secara online.
+* Sistem rekomendasi dapat memberikan efisiensi dalam pemanfaatan pemasaran secara online, sehingga mengurang cara-cara manual yang kurang efektif.
 
 > NOTE:
 >
