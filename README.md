@@ -338,6 +338,21 @@ buku_recommendations('Von der Erde zum Mond')
 
 **SELAMAT** Kita sudah berhasil membuat rekomendasi buku berdasarkan dari topik buku.
 
+**Evaluasi Hasil Rekomendasi**
+
+Dari Hasil dapat bahwa judul buku yang memilki topik yang sama pada judul Von der Erde zum Mond adalah Dune (Classics Hardcover) dan Durch die Wüste kedua masuk ke dalam topik FBC. Mari kita evaluasi hasil tersebut dengan Matrix Precision untuk sistem rekomendasi dengan teknik content based filtering:
+
+* Jumlah rekomendasi = 5
+* Jumlah Hasil rekomendasi dengan topik yang sama = 2
+
+Precision = #of recomendation that are relevant / #of item we recommend
+Precision = 2/5
+Precision = 0.4 (40%)
+
+> Hasil belum cukup baik namun yang harus dipahami pada proyek ini adalah setiap topik memiliki lebih dari 1 topik dan kalau dilihat topik buku Von der Erde zum Mond merupakan gabungan dari topik F B dan C, sehingga sebenarnya hasil rekomendasi mewakili dari salah satu topik buku Von der Erde zum Mond.
+
+**Content Based Filtering dengan Banyak Variabel Kunci**
+
 Selanjutnya kita akan membuat sistem rekomendasi dengan teknik content based filtering dengan banyak variabel. langkah awal adalah dengan menentukan variabel yang akan dijadikan kunci dari pencarian pada sistem rekomendasi.
 
 Pada Tahap ini kita akan mencoba melakukan rekomendasi buku dengan lebih dari satu variabel kunci yaitu variabel penulis_buku, penerbit_buku, dan topik_buku.
