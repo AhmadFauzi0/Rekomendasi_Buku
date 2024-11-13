@@ -253,33 +253,27 @@ Terdapat beberapa teknik dalam membuat sistem rekomendasi, rekomendasi yang dibe
 
 ### Model Development Content Based Filtering 
 
-Dalam tahap inilah Anda mengembangkan sistem rekomendasi dengan teknik content based filtering. Ingatlah, teknik content based filtering akan merekomendasikan item yang mirip dengan item yang disukai pengguna di masa lalu. Pada tahap ini, Anda akan menemukan representasi fitur penting dari setiap kategori buku dengan tfidf vectorizer dan menghitung tingkat kesamaan dengan cosine similarity. Setelah itu, Anda akan membuat sejumlah rekomendasi buku berdasarkan kesamaan yang telah dihitung sebelumnya. Pada Content Based Filtering kita dapat membuat sistem rekomendasi berdasarkan satu variabel kunci dan dengan banyak variabel kunci.
+Terdapat dua pendekatan pada content based filtering yaitu:
 
-Dalam content-based filtering dengan satu variabel kunci, sistem rekomendasi menggunakan satu karakteristik utama, seperti topik buku dalam rekomendasi buku atau film. Sistem ini membandingkan variabel kunci yang sama antar item untuk menemukan kesamaan, sehingga dapat memberikan rekomendasi yang sesuai dengan preferensi pengguna terhadap variabel tunggal ini.
+* Content Based Filtering dengan satu variabel kunci.
+* Content Based Filtering dengan banyak variabel kunci.
 
-Namun, pendekatan ini sering kali terlalu sederhana karena tidak mempertimbangkan informasi tambahan yang relevan. Misalnya, jika hanya menggunakan genre, sistem mungkin melewatkan faktor lain seperti penulis atau gaya bahasa yang juga dapat memengaruhi preferensi pengguna.
+> Dalam content-based filtering dengan satu variabel kunci, sistem rekomendasi menggunakan satu karakteristik utama, seperti topik buku dalam rekomendasi buku atau film. Sistem ini membandingkan variabel kunci yang sama antar item untuk menemukan kesamaan, sehingga dapat memberikan rekomendasi yang sesuai dengan preferensi pengguna terhadap variabel tunggal ini.
+>
+> Namun, pendekatan ini sering kali terlalu sederhana karena tidak mempertimbangkan informasi tambahan yang relevan. Misalnya, jika hanya menggunakan genre, sistem mungkin melewatkan faktor lain seperti penulis atau gaya bahasa yang juga dapat memengaruhi preferensi pengguna.
+>
+> Di sisi lain, content-based filtering dengan banyak variabel kunci melibatkan penggunaan beberapa karakteristik atau fitur dari item untuk menghasilkan rekomendasi, seperti genre, penulis, tahun terbit, dan sinopsis pada buku. Dengan lebih banyak variabel, sistem dapat memberikan rekomendasi yang lebih kaya dan sesuai karena mempertimbangkan berbagai aspek yang mungkin relevan bagi pengguna.
 
-Di sisi lain, content-based filtering dengan banyak variabel kunci melibatkan penggunaan beberapa karakteristik atau fitur dari item untuk menghasilkan rekomendasi, seperti genre, penulis, tahun terbit, dan sinopsis pada buku. Dengan lebih banyak variabel, sistem dapat memberikan rekomendasi yang lebih kaya dan sesuai karena mempertimbangkan berbagai aspek yang mungkin relevan bagi pengguna.
 
 **Content Based Filtering dengan satu variabel kunci**
 
-> kelebihan dan Kekurangan Dengan Satu Variabel Kunci
-> 
-> * lebihan: Mudah diimplementasikan, lebih cepat dan ringan secara komputasi.
-> * kurangan: Cenderung memberikan rekomendasi yang kurang akurat karena hanya mempertimbangkan satu faktor; kurang mampu memberikan rekomendasi yang bervariasi.
-
-* Membuat sistem rekomendasi dengan teknik Content Based Filtering dengan satu variabel kunci, dimana variabel yang dijadikan rujukan adalah variabel **topik_buku**. berikut langkahnya:
-  * Langkah pertama kita akan memanggil data buku yang sudah dibersihan diatas yaitu df_buku.
-  * Langkah kedua melakukan vektorisasi pada variabel topik_buku menggunakan TFIDF.
-  * Selanjutnya, lakukan fit dan transformasi ke dalam bentuk matriks.
-
-Sampai di sini, kita telah berhasil mengidentifikasi representasi fitur penting dari setiap topik buku dengan fungsi tfidfvectorizer. Kita juga telah menghasilkan matriks yang menunjukkan korelasi antara topik buku dengan judul buku. Selanjutnya, kita akan menghitung derajat kesamaan antara satu judul_buku dengan judul_buku lainnya untuk menghasilkan kandidat buku yang akan direkomendasikan.
-
-Pada tahap sebelumnya, kita telah berhasil mengidentifikasi korelasi antara judul buku dengan topik buku. Sekarang, kita akan menghitung derajat kesamaan (similarity degree) antar judul buku dengan teknik cosine similarity. Di sini, kita menggunakan fungsi cosine_similarity dari library sklearn.
+Pada tahap Data Preprocessing kita berhasil mengidentifikasi korelasi antara judul buku dengan topik buku. Sekarang, kita akan menghitung derajat kesamaan (similarity degree) antar judul buku dengan teknik cosine similarity. Di sini, kita menggunakan fungsi cosine_similarity dari library sklearn.
 
 ![Cosin](https://github.com/user-attachments/assets/d098ba25-29d2-4560-b7bf-8ba6f21351c4)
 
 Pada kode diatas, kita menghitung cosine similarity dataframe tfidf_matrix yang kita peroleh pada tahapan sebelumnya. Dengan satu baris kode untuk memanggil fungsi cosine similarity dari library sklearn, kita telah berhasil menghitung kesamaan (similarity) antar buku. Kode di atas menghasilkan keluaran berupa matriks kesamaan dalam bentuk array.
+
+
 
 > **Cosine Similarity**
 > Cosine Similarity adalah metrik yang digunakan untuk mengukur kesamaan antara dua vektor dalam ruang berdimensi tinggi. Dalam konteks pemrosesan bahasa alami dan rekomendasi, cosine similarity sering digunakan untuk menilai kemiripan antara dua dokumen teks atau antara item dalam sistem rekomendasi berdasarkan fitur-fitur tertentu.
